@@ -1,4 +1,4 @@
 Heroes of Camelot Cards
 =======================
 
-See the list [here]().
+See the list [here](http://sullerandras.github.io/heroes-of-camelot/).
