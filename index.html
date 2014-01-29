@@ -22,111 +22,15 @@
     this.atk    = atk
     this.skills = skills
   }
-
+  </script>
+  <script type="text/javascript" src="cards.js"></script>
+  <script type="text/javascript">
   app = angular.module("myApp", [])
   app.controller('AppController', ['$scope', function(scope){
     scope.search = ''
     scope.show_images = true
 
-    scope.cards = []
-    scope.cards.push(new Card('Alpha Stag', 'Druid', 3, '', 30, 2611, 846))
-    scope.cards.push(new Card('Angela', 'Camelot', 5, '', 50, 7192, 2236))
-    scope.cards.push(new Card('Apprentice', 'Camelot', 1, '', 10, 1200, 285))
-    scope.cards.push(new Card('Arabel the True', 'Camelot', 4, '', 40, 5670, 1370))
-    scope.cards.push(new Card('Archmage', 'Camelot', 4, '', 40, 6150, 1485))
-    scope.cards.push(new Card('Armored Warhorse', 'Camelot', 3, '', 30, 3320, 808))
-    scope.cards.push(new Card('Azarel', 'Camelot', 5, '', 50, 9090, 2185))
-    scope.cards.push(new Card('Balzathor', 'Red', 5, '', 50, 6316, 1974))
-    scope.cards.push(new Card('Bard', 'Camelot', 3, 8, 30, 3333, 818))
-    scope.cards.push(new Card('Battlemage', 'Camelot', 3, 11, 30, 4622, 1126))
-    scope.cards.push(new Card('Beastmaster', 'Druid', 4, '', 40, 5200, 1611))
-    scope.cards.push(new Card('Ben-nu Fireborn', 'Druid', 5, '', 50, 7409, 2269))
-    scope.cards.push(new Card('Berserker', 'Druid', 4, '', 40, 4740, 1776))
-    scope.cards.push(new Card('Black Knight', 'Red', 4, '', 40, 4320, 1368))
-    scope.cards.push(new Card('Blacksmith', 'Camelot', 2, 8, 20, 2765, 670))
-    scope.cards.push(new Card('Blood Briar', 'Druid', 3, 8, 30, 3030, 969))
-    scope.cards.push(new Card('Caradd the Gale', 'Druid', 5, '', 50, 6456, 1992))
-    scope.cards.push(new Card('Celestial Lion', 'Camelot', 3, 10, 30, 4200, 1013))
-    scope.cards.push(new Card('Crossbowman', 'Camelot', 1, 6, 10, 1800, 440))
-    scope.cards.push(new Card('Deathcap', 'Druid', 2, 7, 20, 2210, 685))
-    scope.cards.push(new Card('Diamond Knight', 'Camelot', 5, '', 50, 8583, 2060))
-    scope.cards.push(new Card('Dire Bear', 'Druid', 3, 7, 30, 2625, 842))
-    scope.cards.push(new Card('Dire Wolf', 'Druid', 2, 8, 20, 2545, 780))
-    scope.cards.push(new Card('Diviner', 'Camelot', 2, 7, 20, 2400, 585))
-    scope.cards.push(new Card('Druid Initiate', 'Druid', 1, 3, 10, 765, 245))
-    scope.cards.push(new Card('Druid Marksman', 'Druid', 1, 6, 10, 1680, 518))
-    scope.cards.push(new Card('Druid Sage', 'Druid', 1, 5, 10, 1375, 425))
-    scope.cards.push(new Card('Druid Scout', 'Druid', 1, 3, 10, 750, 250))
-    scope.cards.push(new Card('Druid Warrior', 'Druid', 1, 4, 10, 1065, 335))
-    scope.cards.push(new Card('Duelist', 'Camelot', 4, '', 40, 6130, 1492))
-    scope.cards.push(new Card('Earth Elemental', 'Druid', 4, '', 40, 6092, 1878))
-    scope.cards.push(new Card('Elder Shaman', 'Druid', 4, 13, 40, 5644, 1745))
-    scope.cards.push(new Card('Ember Druid', 'Druid', 3, 9, 30, 3445, 1080))
-    scope.cards.push(new Card('Enchantress', 'Druid', 2, 5, 20, 1580, 490))
-    scope.cards.push(new Card('Father Maleficent', 'Red', 4, 10, '', 3500, 1110))
-    scope.cards.push(new Card('Fenric Gore-Claw', 'Red', 5, 13, 50, 5440, 1712))
-    scope.cards.push(new Card('Fire Elemental', 'Camelot', 4, '', 40, 5000, 1300))
-    scope.cards.push(new Card('Footman', 'Camelot', 1, 4, 10, 1180, 290))
-    scope.cards.push(new Card('Galzra', 'Druid', 6, '', 60, 10857, 3265))
-    scope.cards.push(new Card('Gaznar Soulripper', 'Red', 5, '', 50, 6754, 2105))
-    scope.cards.push(new Card('Giant Boar', 'Druid', 3, 8, 30, 3016, 966))
-    scope.cards.push(new Card('Giant Eagle', 'Camelot', 3, 7, 30, 2860, 707))
-    scope.cards.push(new Card('Grail Knight', 'Camelot', 3, 9, 30, 4060, 880))
-    scope.cards.push(new Card('Guardian Angel', 'Camelot', 5, '', 50, 6600, 1550))
-    scope.cards.push(new Card('Guinevere', 'Camelot', 4, '', 40, 4680, 1144))
-    scope.cards.push(new Card('Heavy Swordsman', 'Camelot', 3, '', 30, 4060, 1020))
-    scope.cards.push(new Card('Hope', 'Camelot', 6, '', 60, 9464, 2224))
-    scope.cards.push(new Card('Hunter', 'Camelot', 1, 5, 10, 1500, 360))
-    scope.cards.push(new Card('Huscarl', 'Camelot', 4, '', 50, 4785, 1780))
-    scope.cards.push(new Card('Ice Mage', 'Camelot', 3, '', 30, 3766, 910))
-    scope.cards.push(new Card('Kelpie', 'Druid', 2, 6, 20, 1905, 585))
-    scope.cards.push(new Card('Khufu', 'Red', 5, '', 50, 7600, 2546))
-    scope.cards.push(new Card('Knight', 'Camelot', 2, 7, 20, 2420, 580))
-    scope.cards.push(new Card('Lady of the Lake', 'Camelot', 5, '', 50, 7036, 1694))
-    scope.cards.push(new Card('Longbowman', 'Camelot', 2, 6, 20, 2070, 500))
-    scope.cards.push(new Card('Marble Guardian', 'Camelot', 4, '', 40, 6622, 1600))
-    scope.cards.push(new Card('Mechanical Knight', 'Camelot', 3, '', 30, 4180, 1020))
-    scope.cards.push(new Card('Merlin\'s Dragon', 'Camelot', 5, '', 50, 8065, 1944))
-    scope.cards.push(new Card('Mhor the Wyrm', 'Druid', 5, '', 50, 6933, 2130))
-    scope.cards.push(new Card('Modron', 'Red', 5, '', 50, 4731, 1871))
-    scope.cards.push(new Card('Morbius the Cursed', 'Red', 5, '', 50, 5878, 1843))
-    scope.cards.push(new Card('Mystic Raven', 'Druid', 2, 5, 20, 1565, 495))
-    scope.cards.push(new Card('Nathra Verdaine', 'Druid', 5, '', 50, 8367, 2547))
-    scope.cards.push(new Card('Necros the Grim', 'Red', 4, 12, 40, 4734, 1491))
-    scope.cards.push(new Card('Ossion the Dread', 'Red', 5, '', 50, 9373, 2873))
-    scope.cards.push(new Card('Paladin', 'Camelot', 4, '', 40, 5650, 1376))
-    scope.cards.push(new Card('Pikeman', 'Camelot', 2, 5, 20, 1700, 415))
-    scope.cards.push(new Card('Primal Warrior', 'Druid', 3, '', 30, 3432, 1081))
-    scope.cards.push(new Card('Quillbeast', 'Druid', 2, 6, 20, 1890, 590))
-    scope.cards.push(new Card('Ranger', 'Druid', 4, '', 40, 4305, 1345))
-    scope.cards.push(new Card('Rhiannon the Fair', 'Druid', 6, '', 60, 10306, 3105))
-    scope.cards.push(new Card('Sir Galahad', 'Camelot', 6, '', 60, 11240, 2640))
-    scope.cards.push(new Card('Sir Kay', 'Camelot', 5, '', 50, 7552, 1818))
-    scope.cards.push(new Card('Skinchanger', 'Druid', 2, 7, 20, 2225, 680))
-    scope.cards.push(new Card('Spy', 'Camelot', 1, 3, 10, 830, 205))
-    scope.cards.push(new Card('Squire', 'Camelot', 1, 3, 10, 850, 200))
-    scope.cards.push(new Card('Stone Ancient', 'Druid', 4, '', 40, 5656, 1742))
-    scope.cards.push(new Card('Stone Fist', 'Druid', 5, '', 50, 5440, 2140))
-    scope.cards.push(new Card('Stormcaller', 'Druid', 4, '', 40, 5185, 1616))
-    scope.cards.push(new Card('Taal', 'Camelot', 3, 9, 30, '', ''))
-    scope.cards.push(new Card('Trahern', 'Red', 4, '', 40, 6124, 1973))
-    scope.cards.push(new Card('The Horned Lord', 'Druid', 5, '', 50, 5980, 1852))
-    scope.cards.push(new Card('Thorn Witch', 'Druid', 3, '', 30, 3855, 1200))
-    scope.cards.push(new Card('Toymaker', 'Camelot', 4, '', 40, 4320, 1368))
-    scope.cards.push(new Card('Treekin', 'Druid', 5, '', 50, 7885, 2408))
-    scope.cards.push(new Card('Unicorn', 'Camelot', 1, 5, 10, 1480, 365))
-    scope.cards.push(new Card('Vambrael', 'Camelot', 6, '', 60, 11830, 2780))
-    scope.cards.push(new Card('Vanguard', 'Camelot', 4, '', 40, 4785, 1780))
-    scope.cards.push(new Card('War Cleric', 'Camelot', 3, '', 30, 2841, 706))
-    scope.cards.push(new Card('War Hound', 'Camelot', 2, 6, 20, 2050, 505))
-    scope.cards.push(new Card('Warrior Monk', 'Camelot', 2, 5, 20, 1680, 420))
-    scope.cards.push(new Card('Water Elemental', 'Camelot', 4, 11, 40, 5200, 1250))
-    scope.cards.push(new Card('Water Nymph', 'Druid', 1, 5, 10, 1360, 430))
-    scope.cards.push(new Card('Wild Hunt', 'Druid', 3, '', 30, 3840, 1202))
-    scope.cards.push(new Card('Winter Treekin', 'Druid', 4, '', 40, 5440, 1712))
-    scope.cards.push(new Card('Wood Nymph', 'Druid', 1, 4, 10, 1050, 340))
-    scope.cards.push(new Card('Ysbadden', 'Druid', 4, '', 40, 4740, 1480))
-    scope.cards.push(new Card('Yzabel the Fallen', 'Red', 5, '', 50, 7630, 2367))
+    scope.cards = cards
   }])
   </script>
 </head>
@@ -174,7 +78,7 @@
         <td>{{card.maxlvl}}</td>
         <td>{{card.hp}}</td>
         <td>{{card.atk}}</td>
-        <td>{{card.skills}}</td>
+        <td>{{card.skills.join(', ')}}</td>
         <td ng-if="show_images"><img ng-src="cards/{{card.name}}.jpg" width="400" height="300"></td>
       </tr>
     </table>
