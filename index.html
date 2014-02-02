@@ -6,6 +6,11 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <style>
+  .skill { display: inline-block; padding-right: 5px; }
+  .skill:after { content: ','; }
+  .skill:last-child:after { content: ''; }
+  .skill .hover { position: absolute; z-index: 1; background-color: #68a; padding: 5px; }
+  img { width: 400px; height: 300px; }
   </style>
   <script src="jquery.min.js"></script>
   <script src="angular.min.js"></script>
@@ -31,6 +36,7 @@
     scope.show_images = true
 
     scope.cards = cards
+    scope.hovers = {}
   }])
   </script>
 </head>
@@ -78,8 +84,8 @@
         <td>{{card.maxlvl}}</td>
         <td>{{card.hp}}</td>
         <td>{{card.atk}}</td>
-        <td>{{card.skills.join(', ')}}</td>
-        <td ng-if="show_images"><img ng-src="cards/{{card.name}}.jpg" width="400" height="300"></td>
+        <td><div class="skill" ng-repeat="skill in card.skills" ng-mouseenter="hovers[card.name+skill]=true" ng-mouseleave="hovers[card.name+skill]=false">{{skill}}<div class="hover" ng-if="hovers[card.name+skill]"><img ng-src="skills/{{skill}}.jpg"></div></div></td>
+        <td ng-if="show_images"><img ng-src="cards/{{card.name}}.jpg"></td>
       </tr>
     </table>
   </div>
