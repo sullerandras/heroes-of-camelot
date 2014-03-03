@@ -16,13 +16,14 @@
   <script src="angular.min.js"></script>
   <link rel="stylesheet" type="text/css" href="bootstrap.css">
   <script src="bootstrap.min.js"></script>
+  <script src="tabletop.min.js"></script>
   <script>
-  function Card(name, clazz, stars, mana, maxlvl, hp, atk, skills){
+  function Card(name, clazz, stars, mana, maxlevel, hp, atk, skills){
     this.name   = name
     this.clazz  = clazz
     this.stars  = stars
     this.mana   = mana
-    this.maxlvl = maxlvl
+    this.maxlevel = maxlevel
     this.hp     = hp
     this.atk    = atk
     this.skills = skills
@@ -35,8 +36,31 @@
     scope.search = ''
     scope.show_images = true
 
-    scope.cards = cards
+    // scope.cards = cards
     scope.hovers = {}
+    function updateCards(data, tabletop) {
+      console.log(data)
+      console.log(tabletop)
+      scope.$apply(function(){
+        scope.cards = []
+        for(var i in data){
+          var obj = data[i]
+          var skills = []
+          for(var j = 1; j <= 7; j++){
+            var skill = obj['skill' + j]
+            if (skill) {
+              skills.push(skill)
+            }
+          }
+          var card = new Card(obj.name, obj.class, obj.stars, obj.mana, obj.maxlevel, obj.hp, obj.atk, skills)
+          scope.cards.push(card)
+        }
+      })
+
+    }
+    Tabletop.init( { key: '0AgrwVCi0Zp_LdHF0d1Y5R3NRTXFtZk1rUjJaUEI2dUE',
+                   callback: updateCards,
+                   simpleSheet: true } )
   }])
   </script>
 </head>
@@ -81,7 +105,7 @@
         <td>{{card.clazz}}</td>
         <td>{{card.stars}}</td>
         <td>{{card.mana}}</td>
-        <td>{{card.maxlvl}}</td>
+        <td>{{card.maxlevel}}</td>
         <td>{{card.hp}}</td>
         <td>{{card.atk}}</td>
         <td><div class="skill" ng-repeat="skill in card.skills" ng-mouseenter="hovers[card.name+skill]=true" ng-mouseleave="hovers[card.name+skill]=false">{{skill}}<div class="hover" ng-if="hovers[card.name+skill]"><img ng-src="skills/{{skill}}.jpg"></div></div></td>
