@@ -110,32 +110,61 @@
       </div>
     </form>
 
-    <table class="table table-hover table-striped">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Class</th>
-          <th>Stars</th>
-          <th>Mana</th>
-          <th>Max level</th>
-          <th>HP</th>
-          <th>ATK</th>
-          <th>Skill combos</th>
-          <th ng-if="show_images">Image</th>
-        </tr>
-      </thead>
-      <tr ng-repeat="card in cards | filter:search">
-        <td>{{card.name}}</td>
-        <td>{{card.clazz}}</td>
-        <td>{{card.stars}}</td>
-        <td>{{card.mana}}</td>
-        <td>{{card.maxlevel}}</td>
-        <td>{{card.hp}}</td>
-        <td>{{card.atk}}</td>
-        <td><div class="skill" ng-repeat="skill in card.skills" ng-mouseenter="hovers[card.name+skill]=true" ng-mouseleave="hovers[card.name+skill]=false">{{skill}}<div class="hover" ng-if="hovers[card.name+skill]"><img ng-src="skills/{{skill}}.jpg"></div></div></td>
-        <td ng-if="show_images"><img ng-src="cards/{{card.name}}.jpg"></td>
-      </tr>
-    </table>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#cards" data-toggle="tab">Cards</a></li>
+      <li><a href="#skills" data-toggle="tab">Skills</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div class="tab-pane active" id="cards">
+        <table class="cards table table-hover table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Class</th>
+              <th>Stars</th>
+              <th>Mana</th>
+              <th>Max level</th>
+              <th>HP</th>
+              <th>ATK</th>
+              <th>Skill combos</th>
+              <th ng-if="show_images">Image</th>
+            </tr>
+          </thead>
+          <tr ng-repeat="card in cards | filter:search">
+            <td>{{card.name}}</td>
+            <td>{{card.clazz}}</td>
+            <td>{{card.stars}}</td>
+            <td>{{card.mana}}</td>
+            <td>{{card.maxlevel}}</td>
+            <td>{{card.hp}}</td>
+            <td>{{card.atk}}</td>
+            <td><div class="skill" ng-repeat="skill in card.skills" ng-mouseenter="hovers[card.name+skill]=true" ng-mouseleave="hovers[card.name+skill]=false">{{skill}}<div class="hover" ng-if="hovers[card.name+skill]"><img ng-src="skills/{{skill}}.jpg"></div></div></td>
+            <td class="image" ng-if="show_images"><img ng-src="cards/{{card.name}}.jpg"><div ng-repeat="skill in card.skills" class="skill-box skill-box{{$index+1}}"></div></td>
+          </tr>
+        </table>
+      </div>
+      <div class="tab-pane" id="skills">
+        <table class="skills table table-hover table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Cards</th>
+              <th ng-if="show_images">Image</th>
+            </tr>
+          </thead>
+          <tr ng-repeat="skill in skills | filter:search">
+            <td>{{skill.name}}</td>
+            <td>{{skill.description}}</td>
+            <td><div class="card" ng-repeat="card in skill.cards" ng-mouseenter="hovers[skill.name+card]=true" ng-mouseleave="hovers[skill.name+card]=false">{{card}}<div class="hover" ng-if="hovers[skill.name+card]"><img ng-src="cards/{{card}}.jpg"></div></div></td>
+            <td class="image" ng-if="show_images"><img ng-src="skills/{{skill.name}}.jpg"><div ng-repeat="card in skill.cards" class="card-box card-box{{$index+1}}"></div></td>
+          </tr>
+        </table>
+      </div>
+    </div>
   </div>
   <script type="text/javascript">
   angular.bootstrap(document, ['myApp'])
