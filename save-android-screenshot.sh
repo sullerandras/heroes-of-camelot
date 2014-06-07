@@ -1,10 +1,13 @@
 #!/bin/bash
-filename=$1
-if [ -z "$filename" ]; then
+if [ $# -eq 0 ]; then
   echo "Missing file name parameter"
   exit 1
 fi
 
+join () {
+  echo "$*"
+}
+filename=`join $*`
 ANDROID_SDK=~/android-sdks
 # echo "Taking screenshot via adb from connected Android device…"
 dateAndTime=$(date +"%Y-%m-%d at %H.%M.%S")

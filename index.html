@@ -6,11 +6,14 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <style>
-  .skill { display: inline-block; padding-right: 5px; }
-  .skill:after { content: ','; }
-  .skill:last-child:after { content: ''; }
-  .skill .hover { position: absolute; z-index: 1; background-color: #68a; padding: 5px; }
+  .skill, .card { display: inline-block; padding-right: 5px; }
+  .skill:after, .card:after { content: ','; }
+  .skill:last-child:after, .card:last-child:after { content: ''; }
+  .skill .hover, .card .hover { position: absolute; z-index: 1; background-color: #68a; padding: 5px; }
   img { width: 400px; height: 300px; }
+  td.image { position: relative; }
+  .skill-box { width: 50px; height: 51px; display: inline-block; position: absolute; border: 1px solid red; border-radius: 50%; bottom: 9px; }
+  .skill-box1 { left: 20px; } .skill-box2 { left: 74px; } .skill-box3 { left: 128px; } .skill-box4 { left: 182px; } .skill-box5 { left: 236px; } .skill-box6 { left: 290px; } .skill-box7 { left: 344px; }
   </style>
   <script src="jquery.min.js"></script>
   <script src="angular.min.js"></script>
@@ -28,27 +31,28 @@
     this.atk    = atk
     this.skills = skills
   }
-  </script>
-  <script type="text/javascript" src="cards.js"></script>
-  <script type="text/javascript">
+  function Skill(name, description, cards){
+    this.name        = name
+    this.description = description
+    this.cards       = cards
+  }
+
   app = angular.module("myApp", [])
   app.controller('AppController', ['$scope', function(scope){
     scope.search = ''
     scope.show_images = true
 
-    // scope.cards = cards
     scope.hovers = {}
     function updateCards(data, tabletop) {
-      console.log(data)
-      console.log(tabletop)
+      // console.log(data)
       scope.$apply(function(){
         scope.cards = []
-        for(var i in data){
-          var obj = data[i]
+        for(var i in data.elements){
+          var obj = data.elements[i]
           var skills = []
           for(var j = 1; j <= 7; j++){
             var skill = obj['skill' + j]
-            if (skill) {
+            if (skill && skill != '-') {
               skills.push(skill)
             }
           }
@@ -56,11 +60,31 @@
           scope.cards.push(card)
         }
       })
-
+    }
+    function updateSkills(data, tabletop){
+      // console.log(data)
+      scope.$apply(function(){
+        scope.skills = []
+        for(var i in data.elements){
+          var obj = data.elements[i]
+          var cards = []
+          for(var j = 1; j <= 4; j++){
+            var card = obj['card' + j]
+            if (card) {
+              cards.push(card)
+            }
+          }
+          var skill = new Skill(obj.name, obj.description, cards)
+          scope.skills.push(skill)
+        }
+      })
     }
     Tabletop.init( { key: '0AgrwVCi0Zp_LdHF0d1Y5R3NRTXFtZk1rUjJaUEI2dUE',
-                   callback: updateCards,
-                   simpleSheet: true } )
+                     callback: function(data, tabletop){
+                       updateCards(data.Cards, tabletop)
+                       updateSkills(data.Skills, tabletop)
+                     },
+                   simpleSheet: false } )
   }])
   </script>
 </head>
