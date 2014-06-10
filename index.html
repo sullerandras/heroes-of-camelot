@@ -17,6 +17,7 @@
   </style>
   <script src="jquery.min.js"></script>
   <script src="angular.min.js"></script>
+  <script src="angular-route.js"></script>
   <link rel="stylesheet" type="text/css" href="bootstrap.css">
   <script src="bootstrap.min.js"></script>
   <script src="tabletop.min.js"></script>
@@ -49,7 +50,14 @@
     this.cards       = cards
   }
 
-  app = angular.module("myApp", [])
+  app = angular.module("myApp", ['ngRoute'])
+  app.config(function($routeProvider, $locationProvider) {
+    $locationProvider.html5Mode(false)
+    $routeProvider
+      .when('/', { templateUrl: 'main.html' })
+      // .when('/cards/:cardId', { templateUrl: 'card.html' })
+      .otherwise({redirectTo: '/'})
+  })
   app.controller('AppController', ['$scope', function(scope){
     scope.search = ''
     scope.show_images = true
@@ -122,7 +130,8 @@
 </head>
 
 <body ng-controller="AppController">
-  <div id="main">
+  <div ng-view></div>
+  <script type="text/ng-template" id="main.html">
     <form class="form-horizontal">
       <div class="form-group">
         <label for="search" class="col-sm-2 control-label">Search</label>
@@ -197,7 +206,7 @@
         </table>
       </div>
     </div>
-  </div>
+  </script>
   <script type="text/javascript">
   angular.bootstrap(document, ['myApp'])
   </script>
