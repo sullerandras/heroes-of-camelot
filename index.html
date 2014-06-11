@@ -29,11 +29,6 @@
       console.log('send', 'event', category, action, label, value)
     }
   }
-  $(function(){
-    $('ul.nav-tabs li').on('click', function(e){
-      logEvent('tab', 'click', e.target.text)
-    })
-  });
   function Card(name, clazz, stars, mana, maxlevel, hp, atk, skills){
     this.name   = name
     this.clazz  = clazz
@@ -49,6 +44,16 @@
     this.description = description
     this.cards       = cards
   }
+  function checkvisible(element) {
+    if (!element.is(':visible')) return false
+    var vpH = $(window).height(), // Viewport Height
+        st = $(window).scrollTop(), // Scroll Top
+        sb = st + vpH, // Scroll Bottom
+        t = element.offset().top,
+        b = t + element.height();
+    // console.log(vpH, st, sb, t, b, (st <= b && t <= sb))
+    return st <= b && t <= sb;
+  }
 
   app = angular.module("myApp", ['ngRoute'])
   app.config(function($routeProvider, $locationProvider) {
@@ -58,9 +63,35 @@
       // .when('/cards/:cardId', { templateUrl: 'card.html' })
       .otherwise({redirectTo: '/'})
   })
+  app.filter('limit', function() {
+    return function(input, all) {
+      if (all || !input) return input
+      return input.slice(0, 20)
+    }
+  })
+  app.directive('lazyload', function($document) {
+    return function(scope, element, attr){
+      function onScroll(e){
+        if (checkvisible(element)) {
+          element.attr('src', element.attr('lazyload'))
+        } else {
+          element.attr('src', 'placeholder.png')
+        }
+      }
+      $document.on('scroll', onScroll)
+      scope.$watch(function(){ return checkvisible(element) }, function(visible){
+        if (visible) {
+          element.attr('src', element.attr('lazyload'))
+        } else {
+          element.attr('src', 'placeholder.png')
+        }
+      })
+    }
+  })
   app.controller('AppController', ['$scope', function(scope){
     scope.search = ''
-    scope.show_images = true
+    scope.show_all_cards = false
+    scope.currentTab = 'cards'
 
     scope.hovers = {}
     scope.mouseenterSkill = function(card, skill){
@@ -82,6 +113,13 @@
     }
     scope.isCardHovered = function(skill, card){
       return scope.hovers[skill.name + card]
+    }
+    scope.showTab = function(tab){
+      scope.currentTab = tab
+      logEvent('tab', 'click', tab)
+    }
+    scope.isTabVisible = function(tab){
+      return scope.currentTab == tab
     }
     function updateCards(data, tabletop) {
       // console.log(data)
@@ -143,8 +181,8 @@
         <div class="col-sm-10 col-sm-offset-2">
           <div class="checkbox">
             <label>
-              <input type="checkbox" ng-model="show_images">
-              Show images
+              <input type="checkbox" ng-model="show_all_cards">
+              Show all cards and all skills (might be slow)
             </label>
           </div>
         </div>
@@ -153,13 +191,13 @@
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs">
-      <li class="active"><a href="#cards" data-toggle="tab">Cards</a></li>
-      <li><a href="#skills" data-toggle="tab">Skills</a></li>
+      <li class="active" ng-class="{active: isTabVisible('cards')}"><a href ng-click="showTab('cards')">Cards</a></li>
+      <li ng-class="{active: isTabVisible('skills')}"><a href ng-click="showTab('skills')">Skills</a></li>
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
-      <div class="tab-pane active" id="cards">
+      <div class="tab-pane active" id="cards" ng-class="{active: isTabVisible('cards')}" ng-show="isTabVisible('cards')">
         <table class="cards table table-hover table-striped">
           <thead>
             <tr>
@@ -171,10 +209,10 @@
               <th>HP</th>
               <th>ATK</th>
               <th>Skill combos</th>
-              <th ng-if="show_images">Image</th>
+              <th>Image</th>
             </tr>
           </thead>
-          <tr ng-repeat="card in cards | filter:search">
+          <tr ng-repeat="card in cards | filter:search | limit:show_all_cards">
             <td>{{card.name}}</td>
             <td>{{card.clazz}}</td>
             <td>{{card.stars}}</td>
@@ -183,25 +221,25 @@
             <td>{{card.hp}}</td>
             <td>{{card.atk}}</td>
             <td><div class="skill" ng-repeat="skill in card.skills" ng-mouseenter="mouseenterSkill(card, skill)" ng-mouseleave="mouseleaveSkill(card, skill)">{{skill}}<div class="hover" ng-if="isSkillHovered(card, skill)"><img ng-src="skills/{{skill}}.jpg"></div></div></td>
-            <td class="image" ng-if="show_images"><img ng-src="cards/{{card.name}}.jpg"><div ng-repeat="skill in card.skills" class="skill-box skill-box{{$index+1}}"></div></td>
+            <td class="image"><img src="placeholder.png" lazyload="cards/{{card.name}}.jpg"><div ng-repeat="skill in card.skills" class="skill-box skill-box{{$index+1}}"></div></td>
           </tr>
         </table>
       </div>
-      <div class="tab-pane" id="skills">
+      <div class="tab-pane" id="skills" ng-class="{active: isTabVisible('skills')}" ng-show="isTabVisible('skills')">
         <table class="skills table table-hover table-striped">
           <thead>
             <tr>
               <th>Name</th>
               <th>Description</th>
               <th>Cards</th>
-              <th ng-if="show_images">Image</th>
+              <th>Image</th>
             </tr>
           </thead>
-          <tr ng-repeat="skill in skills | filter:search">
+          <tr ng-repeat="skill in skills | filter:search | limit:show_all_cards">
             <td>{{skill.name}}</td>
             <td>{{skill.description}}</td>
             <td><div class="card" ng-repeat="card in skill.cards" ng-mouseenter="mouseenterCard(skill, card)" ng-mouseleave="mouseleaveCard(skill, card)">{{card}}<div class="hover" ng-if="isCardHovered(skill, card)"><img ng-src="cards/{{card}}.jpg"></div></div></td>
-            <td class="image" ng-if="show_images"><img ng-src="skills/{{skill.name}}.jpg"><div ng-repeat="card in skill.cards" class="card-box card-box{{$index+1}}"></div></td>
+            <td class="image"><img src="placeholder.png" lazyload="skills/{{skill.name}}.jpg"><div ng-repeat="card in skill.cards" class="card-box card-box{{$index+1}}"></div></td>
           </tr>
         </table>
       </div>
