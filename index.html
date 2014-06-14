@@ -14,6 +14,7 @@
   td.image { position: relative; }
   .skill-box { width: 50px; height: 51px; display: inline-block; position: absolute; border: 1px solid red; border-radius: 50%; bottom: 9px; }
   .skill-box1 { left: 20px; } .skill-box2 { left: 74px; } .skill-box3 { left: 128px; } .skill-box4 { left: 182px; } .skill-box5 { left: 236px; } .skill-box6 { left: 290px; } .skill-box7 { left: 344px; }
+  .details { display: inline-block; }
   </style>
   <script src="jquery.min.js"></script>
   <script src="angular.min.js"></script>
@@ -51,8 +52,14 @@
         sb = st + vpH, // Scroll Bottom
         t = element.offset().top,
         b = t + element.height();
-    // console.log(vpH, st, sb, t, b, (st <= b && t <= sb))
     return st <= b && t <= sb;
+  }
+  function is_bot(){
+    try {
+      return window.navigator.userAgent.indexOf('Googlebot') >= 0
+    } catch (e) {
+      return true
+    }
   }
 
   app = angular.module("myApp", ['ngRoute'])
@@ -60,7 +67,7 @@
     $locationProvider.html5Mode(false)
     $routeProvider
       .when('/', { templateUrl: 'main.html' })
-      // .when('/cards/:cardId', { templateUrl: 'card.html' })
+      .when('/cards/:cardId', { templateUrl: 'card.html', controller: 'CardController' })
       .otherwise({redirectTo: '/'})
   })
   app.filter('limit', function() {
@@ -88,82 +95,111 @@
       })
     }
   })
-  app.controller('AppController', ['$scope', function(scope){
-    scope.search = ''
-    scope.show_all_cards = false
-    scope.currentTab = 'cards'
-
-    scope.hovers = {}
-    scope.mouseenterSkill = function(card, skill){
-      scope.hovers[card.name + skill] = true
-      logEvent('skill', 'hover', skill)
-    }
-    scope.mouseleaveSkill = function(card, skill){
-      scope.hovers[card.name + skill] = false
-    }
-    scope.isSkillHovered = function(card, skill){
-      return scope.hovers[card.name + skill]
-    }
-    scope.mouseenterCard = function(skill, card){
-      scope.hovers[skill.name + card] = true
-      logEvent('card', 'hover', card)
-    }
-    scope.mouseleaveCard = function(skill, card){
-      scope.hovers[skill.name + card] = false
-    }
-    scope.isCardHovered = function(skill, card){
-      return scope.hovers[skill.name + card]
-    }
-    scope.showTab = function(tab){
-      scope.currentTab = tab
-      logEvent('tab', 'click', tab)
-    }
-    scope.isTabVisible = function(tab){
-      return scope.currentTab == tab
-    }
+  app.factory('DataBase', function($rootScope, $q){
     function updateCards(data, tabletop) {
-      // console.log(data)
-      scope.$apply(function(){
-        scope.cards = []
-        for(var i in data.elements){
-          var obj = data.elements[i]
-          var skills = []
-          for(var j = 1; j <= 7; j++){
-            var skill = obj['skill' + j]
-            if (skill && skill != '-') {
-              skills.push(skill)
-            }
+      var cards = []
+      for(var i in data.elements){
+        var obj = data.elements[i]
+        var skills = []
+        for(var j = 1; j <= 7; j++){
+          var skill = obj['skill' + j]
+          if (skill && skill != '-') {
+            skills.push(skill)
           }
-          var card = new Card(obj.name, obj.class, obj.stars, obj.mana, obj.maxlevel, obj.hp, obj.atk, skills)
-          scope.cards.push(card)
         }
-      })
+        var card = new Card(obj.name, obj.class, obj.stars, obj.mana, obj.maxlevel, obj.hp, obj.atk, skills)
+        cards.push(card)
+      }
+      return cards
     }
     function updateSkills(data, tabletop){
-      // console.log(data)
-      scope.$apply(function(){
-        scope.skills = []
-        for(var i in data.elements){
-          var obj = data.elements[i]
-          var cards = []
-          for(var j = 1; j <= 4; j++){
-            var card = obj['card' + j]
-            if (card) {
-              cards.push(card)
-            }
+      var skills = []
+      for(var i in data.elements){
+        var obj = data.elements[i]
+        var cards = []
+        for(var j = 1; j <= 4; j++){
+          var card = obj['card' + j]
+          if (card) {
+            cards.push(card)
           }
-          var skill = new Skill(obj.name, obj.description, cards)
-          scope.skills.push(skill)
         }
-      })
+        var skill = new Skill(obj.name, obj.description, cards)
+        skills.push(skill)
+      }
+      return skills
     }
-    Tabletop.init( { key: '0AgrwVCi0Zp_LdHF0d1Y5R3NRTXFtZk1rUjJaUEI2dUE',
-                     callback: function(data, tabletop){
-                       updateCards(data.Cards, tabletop)
-                       updateSkills(data.Skills, tabletop)
-                     },
-                   simpleSheet: false } )
-  }])
+    return {query: function(){
+      if ($rootScope.data) {
+        var deferred = $q.defer()
+        deferred.resolve($rootScope.data)
+        return deferred.promise
+      } else {
+        if (!$rootScope.data_promise) {
+          var deferred = $q.defer()
+          Tabletop.init( { key: '0AgrwVCi0Zp_LdHF0d1Y5R3NRTXFtZk1rUjJaUEI2dUE',
+                           callback: function(data, tabletop){
+                             var cards  = updateCards(data.Cards, tabletop)
+                             var skills = updateSkills(data.Skills, tabletop)
+                             $rootScope.data = {cards: cards, skills: skills}
+                             $rootScope.data_promise = undefined
+                             deferred.resolve($rootScope.data)
+                           },
+                         simpleSheet: false } )
+          $rootScope.data_promise = deferred.promise
+        }
+        return $rootScope.data_promise
+      }
+    }}
+  })
+  app.controller('AppController', function($scope, DataBase){
+    $scope.search = ''
+    $scope.show_all_cards = is_bot()
+    $scope.currentTab = 'cards'
+
+    $scope.hovers = {}
+    $scope.mouseenterSkill = function(card, skill){
+      $scope.hovers[card.name + skill] = true
+      logEvent('skill', 'hover', skill)
+    }
+    $scope.mouseleaveSkill = function(card, skill){
+      $scope.hovers[card.name + skill] = false
+    }
+    $scope.isSkillHovered = function(card, skill){
+      return $scope.hovers[card.name + skill]
+    }
+    $scope.mouseenterCard = function(skill, card){
+      $scope.hovers[skill.name + card] = true
+      logEvent('card', 'hover', card)
+    }
+    $scope.mouseleaveCard = function(skill, card){
+      $scope.hovers[skill.name + card] = false
+    }
+    $scope.isCardHovered = function(skill, card){
+      return $scope.hovers[skill.name + card]
+    }
+    $scope.showTab = function(tab){
+      $scope.currentTab = tab
+      logEvent('tab', 'click', tab)
+    }
+    $scope.isTabVisible = function(tab){
+      return $scope.currentTab == tab
+    }
+    DataBase.query().then(function(data){
+      $scope.cards  = data.cards
+      $scope.skills = data.skills
+    })
+  })
+  app.controller('CardController', function($scope, $routeParams, DataBase){
+    DataBase.query().then(function(data){
+      for (var index in data.cards){
+        var card = data.cards[index]
+        if (card.name == $routeParams.cardId){
+          $scope.card = card
+          break
+        }
+      }
+    })
+  })
   </script>
 </head>
 
@@ -212,16 +248,16 @@
               <th>Image</th>
             </tr>
           </thead>
-          <tr ng-repeat="card in cards | filter:search | limit:show_all_cards">
-            <td>{{card.name}}</td>
-            <td>{{card.clazz}}</td>
+          <tr ng-repeat="card in cards | filter:search | limit:show_all_cards" itemscope itemtype="http://schema.org/Person">
+            <td><a href="#/cards/{{card.name}}" itemprop="name">{{card.name}}</a></td>
+            <td itemprop="gender">{{card.clazz}}</td>
             <td>{{card.stars}}</td>
             <td>{{card.mana}}</td>
             <td>{{card.maxlevel}}</td>
             <td>{{card.hp}}</td>
             <td>{{card.atk}}</td>
             <td><div class="skill" ng-repeat="skill in card.skills" ng-mouseenter="mouseenterSkill(card, skill)" ng-mouseleave="mouseleaveSkill(card, skill)">{{skill}}<div class="hover" ng-if="isSkillHovered(card, skill)"><img ng-src="skills/{{skill}}.jpg"></div></div></td>
-            <td class="image"><img src="placeholder.png" lazyload="cards/{{card.name}}.jpg"><div ng-repeat="skill in card.skills" class="skill-box skill-box{{$index+1}}"></div></td>
+            <td class="image"><img src="cards/{{card.name}}.jpg" itemprop="image"><div ng-repeat="skill in card.skills" class="skill-box skill-box{{$index+1}}"></div></td>
           </tr>
         </table>
       </div>
@@ -239,8 +275,28 @@
             <td>{{skill.name}}</td>
             <td>{{skill.description}}</td>
             <td><div class="card" ng-repeat="card in skill.cards" ng-mouseenter="mouseenterCard(skill, card)" ng-mouseleave="mouseleaveCard(skill, card)">{{card}}<div class="hover" ng-if="isCardHovered(skill, card)"><img ng-src="cards/{{card}}.jpg"></div></div></td>
-            <td class="image"><img src="placeholder.png" lazyload="skills/{{skill.name}}.jpg"><div ng-repeat="card in skill.cards" class="card-box card-box{{$index+1}}"></div></td>
+            <td class="image"><img src="skills/{{skill.name}}.jpg"><div ng-repeat="card in skill.cards" class="card-box card-box{{$index+1}}"></div></td>
           </tr>
+        </table>
+      </div>
+    </div>
+  </script>
+  <script type="text/ng-template" id="card.html">
+    <a href="#/" class="btn btn-default">&lt; Back</a>
+    <div ng-if="card" itemscope itemtype="http://schema.org/Person">
+      <div class="pull-right">
+        <img ng-src="cards/{{card.name}}.jpg" itemprop="image">
+      </div>
+      <div class="details">
+        <table class="table">
+          <tr><th>Name:</th><td itemprop="name">{{card.name}}</td></tr>
+          <tr><th>Class:</th><td itemprop="gender">{{card.clazz}}</td></tr>
+          <tr><th>Stars:</th><td>{{card.stars}}</td></tr>
+          <tr><th>Mana:</th><td>{{card.mana}}</td></tr>
+          <tr><th>Max Level:</th><td>{{card.maxlevel}}</td></tr>
+          <tr><th>HP:</th><td>{{card.hp}}</td></tr>
+          <tr><th>ATK:</th><td>{{card.atk}}</td></tr>
+          <tr><th>Skills:</th><td><div class="skill" ng-repeat="skill in card.skills" ng-mouseenter="mouseenterSkill(card, skill)" ng-mouseleave="mouseleaveSkill(card, skill)">{{skill}}<div class="hover" ng-if="isSkillHovered(card, skill)"><img ng-src="skills/{{skill}}.jpg"></div></div></td></tr>
         </table>
       </div>
     </div>
