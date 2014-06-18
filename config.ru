@@ -1,5 +1,5 @@
 use Rack::Static,
-  :urls => ["/cards", "/skills", "/lib"],
+  :urls => ["/cards", "/skills"],
   :root => ".",
   :header_rules => [
     # Cache all static files in public caches (e.g. Rack::Cache)
@@ -7,6 +7,15 @@ use Rack::Static,
     [:all, {'Cache-Control' => 'public, max-age=86400'}],
   ]
 
+use Rack::Deflater
+use Rack::Static,
+  :urls => ["/lib"],
+  :root => ".",
+  :header_rules => [
+    # Cache all static files in public caches (e.g. Rack::Cache)
+    # as well as in the browser
+    [:all, {'Cache-Control' => 'public, max-age=2592000'}],
+  ]
 
 run lambda { |env|
   [
