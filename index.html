@@ -276,8 +276,8 @@
             <td>{{card.maxlevel}}</td>
             <td>{{card.hp}}</td>
             <td>{{card.atk}}</td>
-            <td><div class="skill" ng-repeat="skill in card.skills" ng-mouseenter="mouseenterSkill(card, skill)" ng-mouseleave="mouseleaveSkill(card, skill)"><a ng-href="#/skills/{{skill}}">{{skill}}</a><div class="hover" ng-if="isSkillHovered(card, skill)"><img ng-src="skills/{{skill}}.jpg"></div></div></td>
-            <td class="image"><img ng-src="cards/{{card.name}}.jpg" itemprop="image"><div ng-repeat="skill in card.skills" class="skill-box skill-box{{$index+1}}"></div></td>
+            <td><div class="skill" ng-repeat="skill in card.skills" ng-mouseenter="mouseenterSkill(card, skill)" ng-mouseleave="mouseleaveSkill(card, skill)"><a ng-href="#/skills/{{skill}}">{{skill}}</a><div class="hover" ng-if="isSkillHovered(card, skill)"><img ng-src="skills/{{skill}}.jpg" alt="{{skill}}"></div></div></td>
+            <td class="image"><img ng-src="cards/{{card.name}}.jpg" alt="{{card.name}}" itemprop="image"><div ng-repeat="skill in card.skills" class="skill-box skill-box{{$index+1}}"></div></td>
           </tr>
         </table>
       </div>
@@ -294,8 +294,8 @@
           <tr ng-repeat="skill in skills | filter:search | limit:show_all_cards">
             <td><a href="#/skills/{{skill.name}}">{{skill.name}}</a></td>
             <td>{{skill.description}}</td>
-            <td><div class="card" ng-repeat="card in skill.cards" ng-mouseenter="mouseenterCard(skill, card)" ng-mouseleave="mouseleaveCard(skill, card)"><a href="#/cards/{{card}}">{{card}}</a><div class="hover" ng-if="isCardHovered(skill, card)"><img ng-src="cards/{{card}}.jpg"></div></div></td>
-            <td class="image"><img ng-src="skills/{{skill.name}}.jpg"><div ng-repeat="card in skill.cards" class="card-box card-box{{$index+1}}"></div></td>
+            <td><div class="card" ng-repeat="card in skill.cards" ng-mouseenter="mouseenterCard(skill, card)" ng-mouseleave="mouseleaveCard(skill, card)"><a href="#/cards/{{card}}">{{card}}</a><div class="hover" ng-if="isCardHovered(skill, card)"><img ng-src="cards/{{card}}.jpg" alt="{{card}}"></div></div></td>
+            <td class="image"><img ng-src="skills/{{skill.name}}.jpg" alt="{{skill.name}}"><div ng-repeat="card in skill.cards" class="card-box card-box{{$index+1}}"></div></td>
           </tr>
         </table>
       </div>
@@ -305,7 +305,7 @@
     <a href="#/" class="btn btn-default">&lt; Back to list</a>
     <div ng-if="card" itemscope itemtype="http://schema.org/Person">
       <div class="pull-right">
-        <img ng-src="cards/{{card.name}}.jpg" itemprop="image">
+        <img ng-src="cards/{{card.name}}.jpg" alt="{{card.name}}" itemprop="image">
       </div>
       <div class="details">
         <table class="table">
@@ -318,7 +318,7 @@
           <tr><th>ATK:</th><td>{{card.atk}}</td></tr>
           <tr>
             <th>Skills:</th>
-            <td><div class="skill" ng-repeat="skill in card.skills" ng-mouseenter="mouseenterSkill(card, skill)" ng-mouseleave="mouseleaveSkill(card, skill)"><a ng-href="#/skills/{{skill}}">{{skill}}</a><div class="hover" ng-if="isSkillHovered(card, skill)"><img ng-src="skills/{{skill}}.jpg"></div></div></td>
+            <td><div class="skill" ng-repeat="skill in card.skills" ng-mouseenter="mouseenterSkill(card, skill)" ng-mouseleave="mouseleaveSkill(card, skill)"><a ng-href="#/skills/{{skill}}">{{skill}}</a><div class="hover" ng-if="isSkillHovered(card, skill)"><img ng-src="skills/{{skill}}.jpg" alt="{{skill}}"></div></div></td>
           </tr>
         </table>
       </div>
@@ -328,13 +328,13 @@
     <a href="#/" class="btn btn-default">&lt; Back to list</a>
     <div ng-if="skill">
       <div class="pull-right">
-        <img ng-src="skills/{{skill.name}}.jpg">
+        <img ng-src="skills/{{skill.name}}.jpg" alt="{{skill.name}}">
       </div>
       <div class="details">
         <table class="table">
           <tr><th>Name:</th><td>{{skill.name}}</td></tr>
           <tr><th>Description:</th><td>{{skill.description}}</td></tr>
-          <tr><th>Cards:</th><td><div class="card" ng-repeat="card in skill.cards" ng-mouseenter="mouseenterCard(skill, card)" ng-mouseleave="mouseleaveCard(skill, card)"><a ng-href="#/cards/{{card}}">{{card}}</a><div class="hover" ng-if="isCardHovered(skill, card)"><img ng-src="cards/{{card}}.jpg"></div></div></td></tr>
+          <tr><th>Cards:</th><td><div class="card" ng-repeat="card in skill.cards" ng-mouseenter="mouseenterCard(skill, card)" ng-mouseleave="mouseleaveCard(skill, card)"><a ng-href="#/cards/{{card}}">{{card}}</a><div class="hover" ng-if="isCardHovered(skill, card)"><img ng-src="cards/{{card}}.jpg" alt="{{card}}"></div></div></td></tr>
         </table>
       </div>
     </div>
