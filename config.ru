@@ -17,6 +17,19 @@ use Rack::Static,
     [:all, {'Cache-Control' => 'public, max-age=2592000'}],
   ]
 
+map "/sitemap.xml" do
+  run lambda { |env|
+    [
+      200,
+      {
+        'Content-Type'  => 'text/xml',
+        'Cache-Control' => 'public, max-age=86400'
+      },
+      File.open('sitemap.xml', File::RDONLY)
+    ]
+  }
+end
+
 run lambda { |env|
   [
     200,
