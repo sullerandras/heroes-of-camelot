@@ -281,16 +281,16 @@
               <th>Image</th>
             </tr>
           </thead>
-          <tr ng-repeat="card in cards | filter:search | limit:show_all_cards" itemscope itemtype="http://schema.org/Person">
-            <td><a ng-href="/card/{{card.name}}" itemprop="name">{{card.name}}</a></td>
-            <td itemprop="gender">{{card.clazz}}</td>
+          <tr ng-repeat="card in cards | filter:search | limit:show_all_cards">
+            <td><a ng-href="/card/{{card.name}}">{{card.name}}</a></td>
+            <td>{{card.clazz}}</td>
             <td>{{card.stars}}</td>
             <td>{{card.mana}}</td>
             <td>{{card.maxlevel}}</td>
             <td>{{card.hp}}</td>
             <td>{{card.atk}}</td>
             <td><div class="skill" ng-repeat="skill in card.skills" ng-mouseenter="mouseenterSkill(card, skill)" ng-mouseleave="mouseleaveSkill(card, skill)"><a ng-href="/skill/{{skill}}">{{skill}}</a><div class="hover" ng-if="isSkillHovered(card, skill)"><img ng-src="/skills/{{skill}}.jpg" alt="{{skill}}"></div></div></td>
-            <td class="image"><img ng-src="/cards/{{card.name}}.jpg" alt="{{card.name}}" itemprop="image"><div ng-repeat="skill in card.skills" class="skill-box skill-box{{$index+1}}"></div></td>
+            <td class="image"><img ng-src="/cards/{{card.name}}.jpg" alt="{{card.name}}"><div ng-repeat="skill in card.skills" class="skill-box skill-box{{$index+1}}"></div></td>
           </tr>
         </table>
       </div>
@@ -316,14 +316,14 @@
   </script>
   <script type="text/ng-template" id="card.html">
     <a href="/" class="btn btn-primary">&lt; Back to list</a>
-    <div ng-if="card" itemscope itemtype="http://schema.org/Person">
+    <div ng-if="card">
       <div class="pull-right">
-        <img ng-src="/cards/{{card.name}}.jpg" alt="{{card.name}}" itemprop="image">
+        <img ng-src="/cards/{{card.name}}.jpg" alt="{{card.name}}">
       </div>
       <div class="details">
         <table class="table">
-          <tr><th>Name:</th><td itemprop="name">{{card.name}}</td></tr>
-          <tr><th>Class:</th><td itemprop="gender">{{card.clazz}}</td></tr>
+          <tr><th>Name:</th><td>{{card.name}}</td></tr>
+          <tr><th>Class:</th><td>{{card.clazz}}</td></tr>
           <tr><th>Stars:</th><td>{{card.stars}}</td></tr>
           <tr><th>Mana:</th><td>{{card.mana}}</td></tr>
           <tr><th>Max Level:</th><td>{{card.maxlevel}}</td></tr>
