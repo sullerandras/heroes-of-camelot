@@ -19,6 +19,7 @@
     height: 15px;
     clear:both;}
   #wrap {display:table;height:100%}
+  body .checkbox { display: inline-block; margin-right: 10px; }
   body .form-horizontal .form-group { margin-left: 0; margin-right: 0; }
   .skill, .card { display: inline-block; padding-right: 5px; }
   .skill:after, .card:after { content: ','; }
@@ -30,6 +31,13 @@
   .skill-box1 { left: 20px; } .skill-box2 { left: 74px; } .skill-box3 { left: 128px; } .skill-box4 { left: 182px; } .skill-box5 { left: 236px; } .skill-box6 { left: 290px; } .skill-box7 { left: 344px; }
   .details { display: inline-block; }
   .footer { color: #888; font-size: 10px; text-align: center; }
+  .card-icon { display: inline-block; width: 85px; vertical-align: top; }
+  .icon { width: 60px; height: 60px; margin-right: 5px; border-radius: 5px; opacity: 0.5; border: 4px solid red; }
+  .icon.have { opacity: 1; border: none;  }
+  .icon1 { background-position: -64px -143px; }
+  .icon2 { background-position: -135px -143px; }
+  .icon3 { background-position: -205px -143px; }
+  .icon4 { background-position: -276px -143px; }
   </style>
   <script src="/lib/jquery.min.js"></script>
   <script src="/lib/angular.min.js"></script>
@@ -86,9 +94,21 @@
       .when('/skill/:skillId', { templateUrl: 'skill.html', controller: 'SkillController' })
       .otherwise({redirectTo: '/'})
   })
+  app.filter('filter_my_cards', function(OwnedCards) {
+    return function(input, show_my_cards) {
+      if (!show_my_cards || !input) return input
+      var result = []
+      input.forEach(function(card){
+        if (OwnedCards.have_card(card.name)){
+          result.push(card)
+        }
+      })
+      return result
+    }
+  })
   app.filter('limit', function() {
-    return function(input, all) {
-      if (all || !input) return input
+    return function(input, all, show_my_cards) {
+      if (all || show_my_cards || !input) return input
       return input.slice(0, 20)
     }
   })
@@ -172,9 +192,84 @@
       }
     }}
   })
-  app.controller('AppController', function($rootScope, $scope, DataBase){
+  app.factory('localStorage', function(){
+    var has_localStorage = (typeof(localStorage) == 'object')
+    var fallback_storage = {}
+    return {
+      setItem: function(key, value){
+        if (has_localStorage) {
+          localStorage.setItem(key, JSON.stringify(value))
+        } else {
+          fallback_storage[key] = value
+        }
+      },
+      getItem: function(key){
+        if (has_localStorage) {
+          return JSON.parse(localStorage.getItem(key))
+        } else {
+          return fallback_storage[key]
+        }
+      }
+    }
+  })
+  app.factory('OwnedCards', function($rootScope, $q, DataBase, localStorage){
+    var owned_cards = localStorage.getItem('owned_cards') || {}
+    var skills = []
+    DataBase.query().then(function(data){
+      skills = data.skills
+      need_recalculate = true
+    })
+    var need_recalculate = true
+    var my_combos = []
+    var service = {
+      calculate_my_combos: function(){
+        my_combos = []
+        skills.forEach(function(skill){
+          var cards_have = 0
+          skill.cards.forEach(function(card){
+            if (owned_cards[card]) {
+              cards_have++
+            }
+          })
+          if (cards_have > 0) {
+            skill.percent_complete = Math.round(100 * cards_have / skill.cards.length)
+            my_combos.push(skill)
+          }
+        })
+        my_combos.sort(function(a, b){
+          return b.percent_complete - a.percent_complete
+        })
+        return my_combos
+      },
+      my_combos: function(){
+        if (need_recalculate){
+          need_recalculate = false
+          service.calculate_my_combos()
+        }
+        return my_combos
+      },
+      add_card: function(card_name){
+        logEvent('card', 'added', card_name)
+        need_recalculate = true
+        owned_cards[card_name] = true
+        localStorage.setItem('owned_cards', owned_cards)
+      },
+      remove_card: function(card_name){
+        logEvent('card', 'removed', card_name)
+        need_recalculate = true
+        delete owned_cards[card_name]
+        localStorage.setItem('owned_cards', owned_cards)
+      },
+      have_card: function(card){
+        return owned_cards[card]
+      }
+    }
+    return service
+  })
+  app.controller('AppController', function($rootScope, $scope, DataBase, OwnedCards){
     $scope.search = ''
     $scope.show_all_cards = is_bot()
+    $scope.show_my_cards = false
     $scope.currentTab = 'cards'
 
     $rootScope.hovers = {}
@@ -205,6 +300,20 @@
     $scope.isTabVisible = function(tab){
       return $scope.currentTab == tab
     }
+    $scope.skillAsBkg = function(skill){
+      return {'background-image': "url(\"/skills/" + skill + ".jpg\")"}
+    }
+    $scope.class_for_my_combo = function(skill, card, $index){
+      var result = 'icon'+($index+1)
+      if ($scope.have_card(card)){
+        result += ' have'
+      }
+      return result
+    }
+    $scope.have_card = OwnedCards.have_card
+    $scope.my_combos = OwnedCards.my_combos
+    $scope.add_card = OwnedCards.add_card
+    $scope.remove_card = OwnedCards.remove_card
     DataBase.query().then(function(data){
       $scope.cards  = data.cards
       $scope.skills = data.skills
@@ -260,6 +369,12 @@
               Show all cards and all skills (might be slow)
             </label>
           </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="show_my_cards">
+              Only show my cards
+            </label>
+          </div>
         </div>
       </div>
     </form>
@@ -268,11 +383,12 @@
     <ul class="nav nav-tabs">
       <li class="active" ng-class="{active: isTabVisible('cards')}"><a href ng-click="showTab('cards')">Cards</a></li>
       <li ng-class="{active: isTabVisible('skills')}"><a href ng-click="showTab('skills')">Skills</a></li>
+      <li ng-class="{active: isTabVisible('my_combos')}"><a href ng-click="showTab('my_combos')">My Combos</a></li>
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
-      <div class="tab-pane active" id="cards" ng-class="{active: isTabVisible('cards')}" ng-show="isTabVisible('cards')">
+      <div class="tab-pane active" id="cards" ng-class="{active: isTabVisible('cards')}" ng-if="isTabVisible('cards')">
         <table class="cards table table-hover table-striped">
           <thead>
             <tr>
@@ -287,8 +403,14 @@
               <th>Image</th>
             </tr>
           </thead>
-          <tr ng-repeat="card in cards | filter:search | limit:show_all_cards">
-            <td><a ng-href="/card/{{card.name}}">{{card.name}}</a></td>
+          <tr ng-repeat="card in cards | filter:search | filter_my_cards:show_my_cards | limit:show_all_cards:show_my_cards">
+            <td>
+              <a ng-href="/card/{{card.name}}">{{card.name}}</a>
+              <br>
+              <br>
+              <button class="btn btn-primary" ng-hide="have_card(card.name)" ng-click="add_card(card.name)">I have this card</button>
+              <button class="btn btn-danger" ng-show="have_card(card.name)" ng-click="remove_card(card.name)">Remove this card</button>
+            </td>
             <td>{{card.clazz}}</td>
             <td>{{card.stars}}</td>
             <td>{{card.mana}}</td>
@@ -300,7 +422,7 @@
           </tr>
         </table>
       </div>
-      <div class="tab-pane" id="skills" ng-class="{active: isTabVisible('skills')}" ng-show="isTabVisible('skills')">
+      <div class="tab-pane" id="skills" ng-class="{active: isTabVisible('skills')}" ng-if="isTabVisible('skills')">
         <table class="skills table table-hover table-striped">
           <thead>
             <tr>
@@ -317,6 +439,9 @@
             <td class="image"><img ng-src="/skills/{{skill.name}}.jpg" alt="{{skill.name}}"><div ng-repeat="card in skill.cards" class="card-box card-box{{$index+1}}"></div></td>
           </tr>
         </table>
+      </div>
+      <div class="tab-pane" id="my_combos" ng-class="{active: isTabVisible('my_combos')}" ng-if="isTabVisible('my_combos')">
+        <div ng-include="'my_combos.html'"></div>
       </div>
     </div>
   </script>
@@ -359,6 +484,29 @@
           <tr><th>Cards:</th><td><div class="card" ng-repeat="card in skill.cards" ng-mouseenter="mouseenterCard(skill, card)" ng-mouseleave="mouseleaveCard(skill, card)"><a ng-href="/card/{{card}}">{{card}}</a><div class="hover" ng-if="isCardHovered(skill, card)"><img ng-src="/cards/{{card}}.jpg" alt="{{card}}"></div></div></td></tr>
         </table>
       </div>
+    </div>
+  </script>
+  <script type="text/ng-template" id="my_combos.html">
+    <p>Here you can see what combos you can make with your cards. You can select/unselect your cards on the Cards tab.</p>
+    <div class="my_combo">
+      <table class="skills table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Cards</th>
+            <th>Image</th>
+          </tr>
+        </thead>
+        <tr ng-repeat="skill in my_combos()">
+          <td><a href="/skill/{{skill.name}}">{{skill.name}}</a></td>
+          <td>{{skill.description}}</td>
+          <td>
+            <div class="card-icon" ng-repeat="card in skill.cards"><div class="icon" ng-class="class_for_my_combo(skill, card, $index)" ng-style="skillAsBkg(skill.name)"></div><a href="/card/{{card}}">{{card}}</a></div>
+          </td>
+          <td class="image"><img ng-src="/skills/{{skill.name}}.jpg" alt="{{skill.name}}"><div ng-repeat="card in skill.cards" class="card-box card-box{{$index+1}}"></div></td>
+        </tr>
+      </table>
     </div>
   </script>
   <script type="text/javascript">
