@@ -92,6 +92,11 @@
       return input.slice(0, 20)
     }
   })
+  app.filter('wikia', function() {
+    return function(input) {
+      return input.replace(/ /g, '_')
+    }
+  })
   app.directive('lazyload', function($document) {
     return function(scope, element, attr){
       function onScroll(e){
@@ -335,6 +340,9 @@
             <td><div class="skill" ng-repeat="skill in card.skills" ng-mouseenter="mouseenterSkill(card, skill)" ng-mouseleave="mouseleaveSkill(card, skill)"><a ng-href="/skill/{{skill}}">{{skill}}</a><div class="hover" ng-if="isSkillHovered(card, skill)"><img ng-src="/skills/{{skill}}.jpg" alt="{{skill}}"></div></div></td>
           </tr>
         </table>
+        <br>
+        <br>
+        More details about this card on <a ng-href="http://heroes-of-camelot.wikia.com/wiki/{{ card.name | wikia }}">wikia.com</a>.
       </div>
     </div>
   </script>
