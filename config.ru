@@ -1,5 +1,5 @@
 use Rack::Static,
-  :urls => ["/cards", "/skills"],
+  :urls => ["/cards", "/combos"],
   :root => ".",
   :header_rules => [
     # Cache all static files in public caches (e.g. Rack::Cache)

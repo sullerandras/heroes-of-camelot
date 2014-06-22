@@ -21,14 +21,14 @@
   #wrap {display:table;height:100%}
   body .checkbox { display: inline-block; margin-right: 10px; }
   body .form-horizontal .form-group { margin-left: 0; margin-right: 0; }
-  .skill, .card { display: inline-block; padding-right: 5px; }
-  .skill:after, .card:after { content: ','; }
-  .skill:last-child:after, .card:last-child:after { content: ''; }
-  .skill .hover, .card .hover { position: absolute; z-index: 1; background-color: #68a; padding: 5px; }
+  .combo, .card { display: inline-block; padding-right: 5px; }
+  .combo:after, .card:after { content: ','; }
+  .combo:last-child:after, .card:last-child:after { content: ''; }
+  .combo .hover, .card .hover { position: absolute; z-index: 1; background-color: #68a; padding: 5px; }
   img { width: 400px; height: 300px; }
   td.image { position: relative; }
-  .skill-box { width: 50px; height: 51px; display: inline-block; position: absolute; border: 1px solid red; border-radius: 50%; bottom: 9px; }
-  .skill-box1 { left: 20px; } .skill-box2 { left: 74px; } .skill-box3 { left: 128px; } .skill-box4 { left: 182px; } .skill-box5 { left: 236px; } .skill-box6 { left: 290px; } .skill-box7 { left: 344px; }
+  .combo-box { width: 50px; height: 51px; display: inline-block; position: absolute; border: 1px solid red; border-radius: 50%; bottom: 9px; }
+  .combo-box1 { left: 20px; } .combo-box2 { left: 74px; } .combo-box3 { left: 128px; } .combo-box4 { left: 182px; } .combo-box5 { left: 236px; } .combo-box6 { left: 290px; } .combo-box7 { left: 344px; }
   .details { display: inline-block; }
   .footer { color: #888; font-size: 10px; text-align: center; }
   .card-icon { display: inline-block; width: 85px; vertical-align: top; }
@@ -53,7 +53,7 @@
       console.log('send', 'event', category, action, label, value)
     }
   }
-  function Card(name, clazz, stars, mana, maxlevel, hp, atk, skills){
+  function Card(name, clazz, stars, mana, maxlevel, hp, atk, combos){
     this.name   = name
     this.clazz  = clazz
     this.stars  = stars
@@ -61,9 +61,9 @@
     this.maxlevel = maxlevel
     this.hp     = hp
     this.atk    = atk
-    this.skills = skills
+    this.combos = combos
   }
-  function Skill(name, description, cards){
+  function Combo(name, description, cards){
     this.name        = name
     this.description = description
     this.cards       = cards
@@ -91,7 +91,7 @@
     $routeProvider
       .when('/', { templateUrl: 'main.html' })
       .when('/card/:cardId', { templateUrl: 'card.html', controller: 'CardController' })
-      .when('/skill/:skillId', { templateUrl: 'skill.html', controller: 'SkillController' })
+      .when('/combo/:comboId', { templateUrl: 'combo.html', controller: 'ComboController' })
       .otherwise({redirectTo: '/'})
   })
   app.filter('filter_my_cards', function(OwnedCards) {
@@ -141,20 +141,20 @@
       var cards = []
       for(var i in data.elements){
         var obj = data.elements[i]
-        var skills = []
+        var combos = []
         for(var j = 1; j <= 7; j++){
-          var skill = obj['skill' + j]
-          if (skill && skill != '-') {
-            skills.push(skill)
+          var combo = obj['skill' + j]
+          if (combo && combo != '-') {
+            combos.push(combo)
           }
         }
-        var card = new Card(obj.name, obj.class, obj.stars, obj.mana, obj.maxlevel, obj.hp, obj.atk, skills)
+        var card = new Card(obj.name, obj.class, obj.stars, obj.mana, obj.maxlevel, obj.hp, obj.atk, combos)
         cards.push(card)
       }
       return cards
     }
-    function updateSkills(data, tabletop){
-      var skills = []
+    function updateCombos(data, tabletop){
+      var combos = []
       for(var i in data.elements){
         var obj = data.elements[i]
         var cards = []
@@ -164,10 +164,9 @@
             cards.push(card)
           }
         }
-        var skill = new Skill(obj.name, obj.description, cards)
-        skills.push(skill)
+        combos.push(new Combo(obj.name, obj.description, cards))
       }
-      return skills
+      return combos
     }
     return {query: function(){
       if ($rootScope.data) {
@@ -180,8 +179,8 @@
           Tabletop.init( { key: '0AgrwVCi0Zp_LdHF0d1Y5R3NRTXFtZk1rUjJaUEI2dUE',
                            callback: function(data, tabletop){
                              var cards  = updateCards(data.Cards, tabletop)
-                             var skills = updateSkills(data.Skills, tabletop)
-                             $rootScope.data = {cards: cards, skills: skills}
+                             var combos = updateCombos(data.Skills, tabletop)
+                             $rootScope.data = {cards: cards, combos: combos}
                              $rootScope.data_promise = undefined
                              deferred.resolve($rootScope.data)
                            },
@@ -214,9 +213,9 @@
   })
   app.factory('OwnedCards', function($rootScope, $q, DataBase, localStorage){
     var owned_cards = localStorage.getItem('owned_cards') || {}
-    var skills = []
+    var combos = []
     DataBase.query().then(function(data){
-      skills = data.skills
+      combos = data.combos
       need_recalculate = true
     })
     var need_recalculate = true
@@ -224,16 +223,16 @@
     var service = {
       calculate_my_combos: function(){
         my_combos = []
-        skills.forEach(function(skill){
+        combos.forEach(function(combo){
           var cards_have = 0
-          skill.cards.forEach(function(card){
+          combo.cards.forEach(function(card){
             if (owned_cards[card]) {
               cards_have++
             }
           })
           if (cards_have > 0) {
-            skill.percent_complete = Math.round(100 * cards_have / skill.cards.length)
-            my_combos.push(skill)
+            combo.percent_complete = Math.round(100 * cards_have / combo.cards.length)
+            my_combos.push(combo)
           }
         })
         my_combos.sort(function(a, b){
@@ -273,25 +272,25 @@
     $scope.currentTab = 'cards'
 
     $rootScope.hovers = {}
-    $scope.mouseenterSkill = function(card, skill){
-      $scope.hovers[card.name + skill] = true
-      logEvent('skill', 'hover', skill)
+    $scope.mouseenterCombo = function(card, combo){
+      $scope.hovers[card.name + combo] = true
+      logEvent('combo', 'hover', combo)
     }
-    $scope.mouseleaveSkill = function(card, skill){
-      $scope.hovers[card.name + skill] = false
+    $scope.mouseleaveCombo = function(card, combo){
+      $scope.hovers[card.name + combo] = false
     }
-    $scope.isSkillHovered = function(card, skill){
-      return $scope.hovers[card.name + skill]
+    $scope.isComboHovered = function(card, combo){
+      return $scope.hovers[card.name + combo]
     }
-    $scope.mouseenterCard = function(skill, card){
-      $scope.hovers[skill.name + card] = true
+    $scope.mouseenterCard = function(combo, card){
+      $scope.hovers[combo.name + card] = true
       logEvent('card', 'hover', card)
     }
-    $scope.mouseleaveCard = function(skill, card){
-      $scope.hovers[skill.name + card] = false
+    $scope.mouseleaveCard = function(combo, card){
+      $scope.hovers[combo.name + card] = false
     }
-    $scope.isCardHovered = function(skill, card){
-      return $scope.hovers[skill.name + card]
+    $scope.isCardHovered = function(combo, card){
+      return $scope.hovers[combo.name + card]
     }
     $scope.showTab = function(tab){
       $scope.currentTab = tab
@@ -300,10 +299,10 @@
     $scope.isTabVisible = function(tab){
       return $scope.currentTab == tab
     }
-    $scope.skillAsBkg = function(skill){
-      return {'background-image': "url(\"/skills/" + skill + ".jpg\")"}
+    $scope.comboAsBkg = function(combo){
+      return {'background-image': "url(\"/combos/" + combo + ".jpg\")"}
     }
-    $scope.class_for_my_combo = function(skill, card, $index){
+    $scope.class_for_my_combo = function(combo, card, $index){
       var result = 'icon'+($index+1)
       if ($scope.have_card(card)){
         result += ' have'
@@ -316,7 +315,7 @@
     $scope.remove_card = OwnedCards.remove_card
     DataBase.query().then(function(data){
       $scope.cards  = data.cards
-      $scope.skills = data.skills
+      $scope.combos = data.combos
     })
   })
   app.controller('CardController', function($rootScope, $scope, $routeParams, DataBase){
@@ -332,14 +331,14 @@
       }
     })
   })
-  app.controller('SkillController', function($rootScope, $scope, $routeParams, DataBase){
+  app.controller('ComboController', function($rootScope, $scope, $routeParams, DataBase){
     $rootScope.hovers = {}
     DataBase.query().then(function(data){
-      for (var index in data.skills){
-        var skill = data.skills[index]
-        if (skill.name == $routeParams.skillId){
-          $scope.skill = skill
-          logEvent('skill', 'view', skill.name)
+      for (var index in data.combos){
+        var combo = data.combos[index]
+        if (combo.name == $routeParams.comboId){
+          $scope.combo = combo
+          logEvent('combo', 'view', combo.name)
           break
         }
       }
@@ -366,7 +365,7 @@
           <div class="checkbox">
             <label>
               <input type="checkbox" ng-model="show_all_cards">
-              Show all cards and all skills (might be slow)
+              Show all cards and all combos (might be slow)
             </label>
           </div>
           <div class="checkbox">
@@ -381,14 +380,14 @@
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs">
-      <li class="active" ng-class="{active: isTabVisible('cards')}"><a href ng-click="showTab('cards')">Cards</a></li>
-      <li ng-class="{active: isTabVisible('skills')}"><a href ng-click="showTab('skills')">Skills</a></li>
+      <li ng-class="{active: isTabVisible('cards')}"><a href ng-click="showTab('cards')">Cards</a></li>
+      <li ng-class="{active: isTabVisible('combos')}"><a href ng-click="showTab('combos')">Combos</a></li>
       <li ng-class="{active: isTabVisible('my_combos')}"><a href ng-click="showTab('my_combos')">My Combos</a></li>
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
-      <div class="tab-pane active" id="cards" ng-class="{active: isTabVisible('cards')}" ng-if="isTabVisible('cards')">
+      <div class="tab-pane" id="cards" ng-class="{active: isTabVisible('cards')}" ng-if="isTabVisible('cards')">
         <table class="cards table table-hover table-striped">
           <thead>
             <tr>
@@ -399,7 +398,7 @@
               <th>Max level</th>
               <th>HP</th>
               <th>ATK</th>
-              <th>Skill combos</th>
+              <th>Combos</th>
               <th>Image</th>
             </tr>
           </thead>
@@ -417,13 +416,13 @@
             <td>{{card.maxlevel}}</td>
             <td>{{card.hp}}</td>
             <td>{{card.atk}}</td>
-            <td><div class="skill" ng-repeat="skill in card.skills" ng-mouseenter="mouseenterSkill(card, skill)" ng-mouseleave="mouseleaveSkill(card, skill)"><a ng-href="/skill/{{skill}}">{{skill}}</a><div class="hover" ng-if="isSkillHovered(card, skill)"><img ng-src="/skills/{{skill}}.jpg" alt="{{skill}}"></div></div></td>
-            <td class="image"><img ng-src="/cards/{{card.name}}.jpg" alt="{{card.name}}"><div ng-repeat="skill in card.skills" class="skill-box skill-box{{$index+1}}"></div></td>
+            <td><div class="combo" ng-repeat="combo in card.combos" ng-mouseenter="mouseenterCombo(card, combo)" ng-mouseleave="mouseleaveCombo(card, combo)"><a ng-href="/combo/{{combo}}">{{combo}}</a><div class="hover" ng-if="isComboHovered(card, combo)"><img ng-src="/combos/{{combo}}.jpg" alt="{{combo}}"></div></div></td>
+            <td class="image"><img ng-src="/cards/{{card.name}}.jpg" alt="{{card.name}}"><div ng-repeat="combo in card.combos" class="combo-box combo-box{{$index+1}}"></div></td>
           </tr>
         </table>
       </div>
-      <div class="tab-pane" id="skills" ng-class="{active: isTabVisible('skills')}" ng-if="isTabVisible('skills')">
-        <table class="skills table table-hover table-striped">
+      <div class="tab-pane" id="combos" ng-class="{active: isTabVisible('combos')}" ng-if="isTabVisible('combos')">
+        <table class="combos table table-hover table-striped">
           <thead>
             <tr>
               <th>Name</th>
@@ -432,11 +431,11 @@
               <th>Image</th>
             </tr>
           </thead>
-          <tr ng-repeat="skill in skills | filter:search | limit:show_all_cards">
-            <td><a href="/skill/{{skill.name}}">{{skill.name}}</a></td>
-            <td>{{skill.description}}</td>
-            <td><div class="card" ng-repeat="card in skill.cards" ng-mouseenter="mouseenterCard(skill, card)" ng-mouseleave="mouseleaveCard(skill, card)"><a href="/card/{{card}}">{{card}}</a><div class="hover" ng-if="isCardHovered(skill, card)"><img ng-src="/cards/{{card}}.jpg" alt="{{card}}"></div></div></td>
-            <td class="image"><img ng-src="/skills/{{skill.name}}.jpg" alt="{{skill.name}}"><div ng-repeat="card in skill.cards" class="card-box card-box{{$index+1}}"></div></td>
+          <tr ng-repeat="combo in combos | filter:search | limit:show_all_cards">
+            <td><a href="/combo/{{combo.name}}">{{combo.name}}</a></td>
+            <td>{{combo.description}}</td>
+            <td><div class="card" ng-repeat="card in combo.cards" ng-mouseenter="mouseenterCard(combo, card)" ng-mouseleave="mouseleaveCard(combo, card)"><a href="/card/{{card}}">{{card}}</a><div class="hover" ng-if="isCardHovered(combo, card)"><img ng-src="/cards/{{card}}.jpg" alt="{{card}}"></div></div></td>
+            <td class="image"><img ng-src="/combos/{{combo.name}}.jpg" alt="{{combo.name}}"><div ng-repeat="card in combo.cards" class="card-box card-box{{$index+1}}"></div></td>
           </tr>
         </table>
       </div>
@@ -461,8 +460,8 @@
           <tr><th>HP:</th><td>{{card.hp}}</td></tr>
           <tr><th>ATK:</th><td>{{card.atk}}</td></tr>
           <tr>
-            <th>Skills:</th>
-            <td><div class="skill" ng-repeat="skill in card.skills" ng-mouseenter="mouseenterSkill(card, skill)" ng-mouseleave="mouseleaveSkill(card, skill)"><a ng-href="/skill/{{skill}}">{{skill}}</a><div class="hover" ng-if="isSkillHovered(card, skill)"><img ng-src="/skills/{{skill}}.jpg" alt="{{skill}}"></div></div></td>
+            <th>Combos:</th>
+            <td><div class="combo" ng-repeat="combo in card.combos" ng-mouseenter="mouseenterCombo(card, combo)" ng-mouseleave="mouseleaveCombo(card, combo)"><a ng-href="/combo/{{combo}}">{{combo}}</a><div class="hover" ng-if="isComboHovered(card, combo)"><img ng-src="/combos/{{combo}}.jpg" alt="{{combo}}"></div></div></td>
           </tr>
         </table>
         <br>
@@ -471,17 +470,17 @@
       </div>
     </div>
   </script>
-  <script type="text/ng-template" id="skill.html">
+  <script type="text/ng-template" id="combo.html">
     <a href="/" class="btn btn-primary">&lt; Back to list</a>
-    <div ng-if="skill">
+    <div ng-if="combo">
       <div class="pull-right">
-        <img ng-src="/skills/{{skill.name}}.jpg" alt="{{skill.name}}">
+        <img ng-src="/combos/{{combo.name}}.jpg" alt="{{combo.name}}">
       </div>
       <div class="details">
         <table class="table">
-          <tr><th>Name:</th><td>{{skill.name}}</td></tr>
-          <tr><th>Description:</th><td>{{skill.description}}</td></tr>
-          <tr><th>Cards:</th><td><div class="card" ng-repeat="card in skill.cards" ng-mouseenter="mouseenterCard(skill, card)" ng-mouseleave="mouseleaveCard(skill, card)"><a ng-href="/card/{{card}}">{{card}}</a><div class="hover" ng-if="isCardHovered(skill, card)"><img ng-src="/cards/{{card}}.jpg" alt="{{card}}"></div></div></td></tr>
+          <tr><th>Name:</th><td>{{combo.name}}</td></tr>
+          <tr><th>Description:</th><td>{{combo.description}}</td></tr>
+          <tr><th>Cards:</th><td><div class="card" ng-repeat="card in combo.cards" ng-mouseenter="mouseenterCard(combo, card)" ng-mouseleave="mouseleaveCard(combo, card)"><a ng-href="/card/{{card}}">{{card}}</a><div class="hover" ng-if="isCardHovered(combo, card)"><img ng-src="/cards/{{card}}.jpg" alt="{{card}}"></div></div></td></tr>
         </table>
       </div>
     </div>
@@ -489,7 +488,7 @@
   <script type="text/ng-template" id="my_combos.html">
     <p>Here you can see what combos you can make with your cards. You can select/unselect your cards on the Cards tab.</p>
     <div class="my_combo">
-      <table class="skills table table-hover table-striped">
+      <table class="combos table table-hover table-striped">
         <thead>
           <tr>
             <th>Name</th>
@@ -498,13 +497,13 @@
             <th>Image</th>
           </tr>
         </thead>
-        <tr ng-repeat="skill in my_combos()">
-          <td><a href="/skill/{{skill.name}}">{{skill.name}}</a></td>
-          <td>{{skill.description}}</td>
+        <tr ng-repeat="combo in my_combos()">
+          <td><a href="/combo/{{combo.name}}">{{combo.name}}</a></td>
+          <td>{{combo.description}}</td>
           <td>
-            <div class="card-icon" ng-repeat="card in skill.cards"><div class="icon" ng-class="class_for_my_combo(skill, card, $index)" ng-style="skillAsBkg(skill.name)"></div><a href="/card/{{card}}">{{card}}</a></div>
+            <div class="card-icon" ng-repeat="card in combo.cards"><div class="icon" ng-class="class_for_my_combo(combo, card, $index)" ng-style="comboAsBkg(combo.name)"></div><a href="/card/{{card}}">{{card}}</a></div>
           </td>
-          <td class="image"><img ng-src="/skills/{{skill.name}}.jpg" alt="{{skill.name}}"><div ng-repeat="card in skill.cards" class="card-box card-box{{$index+1}}"></div></td>
+          <td class="image"><img ng-src="/combos/{{combo.name}}.jpg" alt="{{combo.name}}"><div ng-repeat="card in combo.cards" class="card-box card-box{{$index+1}}"></div></td>
         </tr>
       </table>
     </div>
