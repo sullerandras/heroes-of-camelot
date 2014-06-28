@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html ng-controller="AppController">
 <head>
-  <title>Heroes of Camelot</title>
+  <title ng-bind-template="{{title}}">Heroes of Camelot</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -89,7 +89,7 @@
   app.config(function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true)
     $routeProvider
-      .when('/', { templateUrl: 'main.html' })
+      .when('/', { templateUrl: 'main.html', controller: 'CardListController' })
       .when('/card/:cardId', { templateUrl: 'card.html', controller: 'CardController' })
       .when('/combo/:comboId', { templateUrl: 'combo.html', controller: 'ComboController' })
       .otherwise({redirectTo: '/'})
@@ -266,11 +266,22 @@
     return service
   })
   app.controller('AppController', function($rootScope, $scope, DataBase, OwnedCards){
+  })
+  app.controller('CardListController', function($rootScope, $scope, DataBase, OwnedCards){
     $scope.search = ''
     $scope.show_all_cards = is_bot()
     $scope.show_my_cards = false
     $scope.currentTab = 'cards'
 
+    $scope.$watch('currentTab', function(){
+      if ($scope.currentTab == 'combos') {
+        $rootScope.title = 'Combo List - Heroes of Camelot'
+      } else if ($scope.currentTab == 'my_combos') {
+        $rootScope.title = 'My Combo List - Heroes of Camelot'
+      } else {
+        $rootScope.title = 'Card List - Heroes of Camelot'
+      }
+    })
     $rootScope.hovers = {}
     $scope.mouseenterCombo = function(card, combo){
       $scope.hovers[card.name + combo] = true
@@ -325,6 +336,7 @@
         var card = data.cards[index]
         if (card.name == $routeParams.cardId){
           $scope.card = card
+          $rootScope.title = card.name + ' - Card - Heroes of Camelot'
           logEvent('card', 'view', card.name)
           break
         }
@@ -337,6 +349,7 @@
       for (var index in data.combos){
         var combo = data.combos[index]
         if (combo.name == $routeParams.comboId){
+          $rootScope.title = combo.name + ' - Combo - Heroes of Camelot'
           $scope.combo = combo
           logEvent('combo', 'view', combo.name)
           break
@@ -347,7 +360,7 @@
   </script>
 </head>
 
-<body ng-controller="AppController">
+<body>
   <div id="wrap">
     <div ng-view></div>
   </div>
@@ -452,7 +465,7 @@
       </div>
       <div class="details">
         <table class="table">
-          <tr><th>Name:</th><td>{{card.name}}</td></tr>
+          <tr><th>Card Name:</th><td>{{card.name}}</td></tr>
           <tr><th>Class:</th><td>{{card.clazz}}</td></tr>
           <tr><th>Stars:</th><td>{{card.stars}}</td></tr>
           <tr><th>Mana:</th><td>{{card.mana}}</td></tr>
@@ -478,7 +491,7 @@
       </div>
       <div class="details">
         <table class="table">
-          <tr><th>Name:</th><td>{{combo.name}}</td></tr>
+          <tr><th>Combo Name:</th><td>{{combo.name}}</td></tr>
           <tr><th>Description:</th><td>{{combo.description}}</td></tr>
           <tr><th>Cards:</th><td><div class="card" ng-repeat="card in combo.cards" ng-mouseenter="mouseenterCard(combo, card)" ng-mouseleave="mouseleaveCard(combo, card)"><a ng-href="/card/{{card}}">{{card}}</a><div class="hover" ng-if="isCardHovered(combo, card)"><img ng-src="/cards/{{card}}.jpg" alt="{{card}}"></div></div></td></tr>
         </table>
