@@ -1,30 +1,30 @@
-# Add user agent to log
-module Rack
-  class CommonLogger
-    MYFORMAT = %{%s - %s [%s] "%s %s%s %s" %d %s %0.4f "%s"\n}
+# # Add user agent to log
+# module Rack
+#   class CommonLogger
+#     MYFORMAT = %{%s - %s [%s] "%s %s%s %s" %d %s %0.4f "%s"\n}
 
-    private
+#     private
 
-    def log(env, status, header, began_at)
-      now = Time.now
-      length = extract_content_length(header)
+#     def log(env, status, header, began_at)
+#       now = Time.now
+#       length = extract_content_length(header)
 
-      logger = @logger || env['rack.errors']
-      logger.write MYFORMAT % [
-        env['HTTP_X_FORWARDED_FOR'] || env["REMOTE_ADDR"] || "-",
-        env["REMOTE_USER"] || "-",
-        now.strftime("%d/%b/%Y %H:%M:%S"),
-        env["REQUEST_METHOD"],
-        env["PATH_INFO"],
-        env["QUERY_STRING"].empty? ? "" : "?"+env["QUERY_STRING"],
-        env["HTTP_VERSION"],
-        status.to_s[0..3],
-        length,
-        now - began_at,
-        env['HTTP_USER_AGENT']]
-    end
-  end
-end
+#       logger = @logger || env['rack.errors']
+#       logger.write MYFORMAT % [
+#         env['HTTP_X_FORWARDED_FOR'] || env["REMOTE_ADDR"] || "-",
+#         env["REMOTE_USER"] || "-",
+#         now.strftime("%d/%b/%Y %H:%M:%S"),
+#         env["REQUEST_METHOD"],
+#         env["PATH_INFO"],
+#         env["QUERY_STRING"].empty? ? "" : "?"+env["QUERY_STRING"],
+#         env["HTTP_VERSION"],
+#         status.to_s[0..3],
+#         length,
+#         now - began_at,
+#         env['HTTP_USER_AGENT']]
+#     end
+#   end
+# end
 
 use Rack::Static,
   :urls => ["/cards", "/combos"],
