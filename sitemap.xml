@@ -1,5 +1,5 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<url><loc>http://www.heroes-of-camelot.info</loc><lastmod>2014-06-28</lastmod><changefreq>hourly</changefreq></url>
+<url><loc>http://www.heroes-of-camelot.info</loc><lastmod>2014-06-30</lastmod><changefreq>hourly</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Abnoba</loc><lastmod>2014-04-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Ageless%20Scorpion</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Aleria</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
@@ -97,7 +97,7 @@
 <url><loc>http://www.heroes-of-camelot.info/card/Kelley</loc><lastmod>2014-06-22</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Kelpie</loc><lastmod>2014-01-29</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Khufu</loc><lastmod>2014-01-28</lastmod><changefreq>daily</changefreq></url>
-<url><loc>http://www.heroes-of-camelot.info/card/King's%20Guard</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
+<url><loc>http://www.heroes-of-camelot.info/card/King's%20Guard</loc><lastmod>2014-06-30</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Knight%20of%20the%20Rose</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Knight</loc><lastmod>2014-06-28</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Lady%20of%20the%20Lake</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
@@ -150,6 +150,7 @@
 <url><loc>http://www.heroes-of-camelot.info/card/Stormcaller</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Sun%20Mage</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Sword%20Summoner</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
+<url><loc>http://www.heroes-of-camelot.info/card/Taal</loc><lastmod>2014-06-30</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Telekinetic</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Terraheart</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/The%20Horned%20Lord</loc><lastmod>2014-06-16</lastmod><changefreq>daily</changefreq></url>
@@ -168,7 +169,7 @@
 <url><loc>http://www.heroes-of-camelot.info/card/Veteran%20Paladin</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Violet%20Knight</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Vortigern</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
-<url><loc>http://www.heroes-of-camelot.info/card/War%20Cleric</loc><lastmod>2014-01-28</lastmod><changefreq>daily</changefreq></url>
+<url><loc>http://www.heroes-of-camelot.info/card/War%20Cleric</loc><lastmod>2014-06-30</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/War%20Drummer</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/War%20Hound</loc><lastmod>2014-02-02</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/War</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
