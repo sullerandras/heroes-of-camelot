@@ -44,15 +44,7 @@
   <script src="/lib/angular-route.js"></script>
   <link rel="stylesheet" type="text/css" href="/lib/bootstrap.css">
   <script src="/lib/bootstrap.min.js"></script>
-  <script src="/lib/tabletop.min.js"></script>
   <script>
-  function logEvent(category, action, label, value){
-    if (typeof(ga) != 'undefined') {
-      ga('send', 'event', category, action, label, value)
-    } else {
-      console.log('send', 'event', category, action, label, value)
-    }
-  }
   function Card(name, clazz, stars, mana, maxlevel, hp, atk, combos){
     this.name   = name
     this.clazz  = clazz
@@ -67,6 +59,17 @@
     this.name        = name
     this.description = description
     this.cards       = cards
+  }
+  </script>
+  <script src="/cards.js"></script>
+  <script src="/combos.js"></script>
+  <script>
+  function logEvent(category, action, label, value){
+    if (typeof(ga) != 'undefined') {
+      ga('send', 'event', category, action, label, value)
+    } else {
+      console.log('send', 'event', category, action, label, value)
+    }
   }
   function checkvisible(element) {
     if (!element.is(':visible')) return false
@@ -137,58 +140,11 @@
     }
   })
   app.factory('DataBase', function($rootScope, $q){
-    function updateCards(data, tabletop) {
-      var cards = []
-      for(var i in data.elements){
-        var obj = data.elements[i]
-        var combos = []
-        for(var j = 1; j <= 7; j++){
-          var combo = obj['skill' + j]
-          if (combo && combo != '-') {
-            combos.push(combo)
-          }
-        }
-        var card = new Card(obj.name, obj.class, obj.stars, obj.mana, obj.maxlevel, obj.hp, obj.atk, combos)
-        cards.push(card)
-      }
-      return cards
-    }
-    function updateCombos(data, tabletop){
-      var combos = []
-      for(var i in data.elements){
-        var obj = data.elements[i]
-        var cards = []
-        for(var j = 1; j <= 4; j++){
-          var card = obj['card' + j]
-          if (card) {
-            cards.push(card)
-          }
-        }
-        combos.push(new Combo(obj.name, obj.description, cards))
-      }
-      return combos
-    }
     return {query: function(){
-      if ($rootScope.data) {
-        var deferred = $q.defer()
-        deferred.resolve($rootScope.data)
-        return deferred.promise
-      } else {
-        if (!$rootScope.data_promise) {
-          var deferred = $q.defer()
-          Tabletop.init( { key: '0AgrwVCi0Zp_LdHF0d1Y5R3NRTXFtZk1rUjJaUEI2dUE',
-                           callback: function(data, tabletop){
-                             var cards  = updateCards(data.Cards, tabletop)
-                             var combos = updateCombos(data.Skills, tabletop)
-                             $rootScope.data = {cards: cards, combos: combos}
-                             $rootScope.data_promise = undefined
-                             deferred.resolve($rootScope.data)
-                           },
-                         simpleSheet: false } )
-          $rootScope.data_promise = deferred.promise
-        }
-        return $rootScope.data_promise
-      }
+      var deferred = $q.defer()
+      $rootScope.data = {cards: cards, combos: combos}
+      deferred.resolve($rootScope.data)
+      return deferred.promise
     }}
   })
   app.factory('localStorage', function(){
