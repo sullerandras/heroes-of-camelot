@@ -1,3 +1,5 @@
+require 'uri'
+
 class MyLogger
   FORMAT = %{%s - %s [%s] "%s %s%s %s" %d %s %0.4f "%s"\n}
 
@@ -88,13 +90,25 @@ map "/robots.txt" do
   }
 end
 
+def is_bot(env)
+  env['HTTP_USER_AGENT'].include? 'Googlebot'
+end
+
 run lambda { |env|
-  [
-    200,
-    {
-      'Content-Type'  => 'text/html',
-      'Cache-Control' => 'public, max-age=60'
-    },
-    File.open('index.html', File::RDONLY)
-  ]
+  path = URI.unescape env['REQUEST_PATH']
+  path = '/index.html' if path == '/'
+  static_path = "static#{path}"
+  if is_bot(env) && File.exist?(static_path)
+    [
+      200,
+      {'Content-Type'  => 'text/html ', 'Cache-Control' => 'public, max-age=86400'},
+      File.open(static_path, File::RDONLY)
+    ]
+  else
+    [
+      200,
+      {'Content-Type'  => 'text/html', 'Cache-Control' => 'public, max-age=60'},
+      File.open('index.html', File::RDONLY)
+    ]
+  end
 }

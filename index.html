@@ -264,7 +264,7 @@
       logEvent('tab', 'click', tab)
     }
     $scope.isTabVisible = function(tab){
-      return $scope.currentTab == tab
+      return ($scope.currentTab == tab) || is_bot()
     }
     $scope.comboAsBkg = function(combo){
       return {'background-image': "url(\"/combos/" + combo + ".jpg\")"}
@@ -477,7 +477,7 @@
       </table>
     </div>
   </script>
-  <script type="text/javascript">
+  <script>
   angular.bootstrap(document, ['myApp'])
   </script>
   <script>
