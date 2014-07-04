@@ -1,0 +1,96 @@
+<!DOCTYPE html><html ng-controller="AppController" class="ng-scope"><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\:form{display:block;}</style>
+  <title ng-bind-template="Galzra - Card - Heroes of Camelot" class="ng-binding">Galzra - Card - Heroes of Camelot</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="Heroes of Camelot list of cards">
+  <style>
+  /* Sticky Footer Solution */
+  * {margin:0;padding:0;}
+  html, body {height: 100%; width: 100%;}
+  #wrap {min-height: 100%;width: 100%;}
+  #main {overflow:auto;
+    padding-bottom: 15px;}  /* must be same height as the footer */
+  .footer {position: relative;
+    margin-top: -15px; /* negative value of footer height */
+    height: 15px;
+    clear:both;}
+  #wrap {display:table;height:100%}
+  body .checkbox { display: inline-block; margin-right: 10px; }
+  body .form-horizontal .form-group { margin-left: 0; margin-right: 0; }
+  .combo, .card { display: inline-block; padding-right: 5px; }
+  .combo:after, .card:after { content: ','; }
+  .combo:last-child:after, .card:last-child:after { content: ''; }
+  .combo .hover, .card .hover { position: absolute; z-index: 1; background-color: #68a; padding: 5px; }
+  img { width: 400px; height: 300px; }
+  td.image { position: relative; }
+  .combo-box { width: 50px; height: 51px; display: inline-block; position: absolute; border: 1px solid red; border-radius: 50%; bottom: 9px; }
+  .combo-box1 { left: 20px; } .combo-box2 { left: 74px; } .combo-box3 { left: 128px; } .combo-box4 { left: 182px; } .combo-box5 { left: 236px; } .combo-box6 { left: 290px; } .combo-box7 { left: 344px; }
+  .details { display: inline-block; }
+  .footer { color: #888; font-size: 10px; text-align: center; }
+  .card-icon { display: inline-block; width: 85px; vertical-align: top; }
+  .icon { width: 60px; height: 60px; margin-right: 5px; border-radius: 5px; opacity: 0.5; border: 4px solid red; }
+  .icon.have { opacity: 1; border: none;  }
+  .icon1 { background-position: -64px -143px; }
+  .icon2 { background-position: -135px -143px; }
+  .icon3 { background-position: -205px -143px; }
+  .icon4 { background-position: -276px -143px; }
+  </style>
+  
+  
+  
+  <link rel="stylesheet" type="text/css" href="/lib/bootstrap.css">
+  
+  
+  
+  
+  
+</head>
+
+<body style="">
+  <div id="wrap">
+    <!-- ngView:  --><div ng-view="" class="ng-scope">
+    <a href="/" class="btn btn-primary ng-scope">&lt; Back to list</a>
+    <!-- ngIf: card --><div ng-if="card" class="ng-scope">
+      <div class="pull-right">
+        <img ng-src="/cards/Galzra.jpg" alt="Galzra" src="/cards/Galzra.jpg">
+      </div>
+      <div class="details">
+        <table class="table">
+          <tbody><tr><th>Card Name:</th><td class="ng-binding">Galzra</td></tr>
+          <tr><th>Class:</th><td class="ng-binding">Druid</td></tr>
+          <tr><th>Stars:</th><td class="ng-binding">6</td></tr>
+          <tr><th>Mana:</th><td class="ng-binding">20</td></tr>
+          <tr><th>Max Level:</th><td class="ng-binding">60</td></tr>
+          <tr><th>HP:</th><td class="ng-binding">10857</td></tr>
+          <tr><th>ATK:</th><td class="ng-binding">3265</td></tr>
+          <tr>
+            <th>Combos:</th>
+            <td><!-- ngRepeat: combo in card.combos --><div class="combo ng-scope" ng-repeat="combo in card.combos" ng-mouseenter="mouseenterCombo(card, combo)" ng-mouseleave="mouseleaveCombo(card, combo)"><a ng-href="/combo/Fire Breathing" class="ng-binding" href="/combo/Fire Breathing">Fire Breathing</a><!-- ngIf: isComboHovered(card, combo) --></div><!-- end ngRepeat: combo in card.combos --><div class="combo ng-scope" ng-repeat="combo in card.combos" ng-mouseenter="mouseenterCombo(card, combo)" ng-mouseleave="mouseleaveCombo(card, combo)"><a ng-href="/combo/Elite Force" class="ng-binding" href="/combo/Elite Force">Elite Force</a><!-- ngIf: isComboHovered(card, combo) --></div><!-- end ngRepeat: combo in card.combos --><div class="combo ng-scope" ng-repeat="combo in card.combos" ng-mouseenter="mouseenterCombo(card, combo)" ng-mouseleave="mouseleaveCombo(card, combo)"><a ng-href="/combo/Epic Serpents" class="ng-binding" href="/combo/Epic Serpents">Epic Serpents</a><!-- ngIf: isComboHovered(card, combo) --></div><!-- end ngRepeat: combo in card.combos --><div class="combo ng-scope" ng-repeat="combo in card.combos" ng-mouseenter="mouseenterCombo(card, combo)" ng-mouseleave="mouseleaveCombo(card, combo)"><a ng-href="/combo/Mythic Creatures" class="ng-binding" href="/combo/Mythic Creatures">Mythic Creatures</a><!-- ngIf: isComboHovered(card, combo) --></div><!-- end ngRepeat: combo in card.combos --><div class="combo ng-scope" ng-repeat="combo in card.combos" ng-mouseenter="mouseenterCombo(card, combo)" ng-mouseleave="mouseleaveCombo(card, combo)"><a ng-href="/combo/Behemoths" class="ng-binding" href="/combo/Behemoths">Behemoths</a><!-- ngIf: isComboHovered(card, combo) --></div><!-- end ngRepeat: combo in card.combos --><div class="combo ng-scope" ng-repeat="combo in card.combos" ng-mouseenter="mouseenterCombo(card, combo)" ng-mouseleave="mouseleaveCombo(card, combo)"><a ng-href="/combo/Unstoppable Force" class="ng-binding" href="/combo/Unstoppable Force">Unstoppable Force</a><!-- ngIf: isComboHovered(card, combo) --></div><!-- end ngRepeat: combo in card.combos --></td>
+          </tr>
+        </tbody></table>
+        <br>
+        <br>
+        More details about this card on <a ng-href="http://heroes-of-camelot.wikia.com/wiki/Galzra" href="http://heroes-of-camelot.wikia.com/wiki/Galzra">wikia.com</a>.
+      </div>
+    </div><!-- end ngIf: card -->
+  </div>
+  </div>
+  <div class="footer">Heroes of Camelot is a trademark of <a href="http://www.kabam.com">Kabam Inc.</a></div>
+  
+  
+  
+  
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-48535839-6', 'heroes-of-camelot.info');
+    ga('send', 'pageview');
+  </script>
+
+
+</body></html>
