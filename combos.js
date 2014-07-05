@@ -97,6 +97,7 @@ var combos = [
   new Combo("Noobs", "Passive - Increase Skill Proc of team members by 5%", ["Squire","Apprentice","Druid Initiate",]),
   new Combo("On the Hunt", "Passive - Raise team's ATK by 25%", ["Phantom Panther","Ranger",]),
   new Combo("Opposite Ends", "Increase ATK by 300% when HP falls below 10%", ["Death","Hope","Gaznar Soulripper","White Knight",]),
+  new Combo("Patriots", "Passive - Raise team's ATK by 74%", ["Bald Eagle","Grillmaster",]),
   new Combo("Pet Familiars", "Remove 80% of enemy team's current HP", ["Moira","Arcane Archer","Balzathor","Silverheart",]),
   new Combo("Phoenix Fury", "Revive team with 50% HP upon death", ["Ben-nu Frostborn","Ben-nu Skyborn","Ben-nu Hellborn","Ben-nu Fireborn",]),
   new Combo("Polar", "Passive - Reduce damage by 30%", ["Hope","Toymaker","Winter Treekin","Angela",]),
