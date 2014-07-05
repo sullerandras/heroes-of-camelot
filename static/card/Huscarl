@@ -1,5 +1,5 @@
-<!DOCTYPE html><html ng-controller="AppController" class="ng-scope"><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\:form{display:block;}</style>
-  <title ng-bind-template="Huscarl - Card - Heroes of Camelot" class="ng-binding">Huscarl - Card - Heroes of Camelot</title>
+<!DOCTYPE html><html><head>
+  <title-template="Huscarl - Card - Heroes of Camelot">Huscarl - Card - Heroes of Camelot</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -37,52 +37,38 @@
   .icon3 { background-position: -205px -143px; }
   .icon4 { background-position: -276px -143px; }
   </style>
-  
-  
-  
   <link rel="stylesheet" type="text/css" href="/lib/bootstrap.css">
-  
-  
-  
-  
-  
 </head>
-
-<body style="">
+<body>
   <div id="wrap">
-    <!-- ngView:  --><div ng-view="" class="ng-scope">
-    <a href="/" class="btn btn-primary ng-scope">&lt; Back to list</a>
-    <!-- ngIf: card --><div ng-if="card" class="ng-scope">
+    <div>
+    <a href="/" class="btn btn-primary">&lt; Back to list</a>
+    <div>
       <div class="pull-right">
-        <img ng-src="/cards/Huscarl.jpg" alt="Huscarl" src="/cards/Huscarl.jpg">
+        <img alt="Huscarl" src="/cards/Huscarl.jpg">
       </div>
       <div class="details">
         <table class="table">
-          <tbody><tr><th>Card Name:</th><td class="ng-binding">Huscarl</td></tr>
-          <tr><th>Class:</th><td class="ng-binding">Camelot</td></tr>
-          <tr><th>Stars:</th><td class="ng-binding">4</td></tr>
-          <tr><th>Mana:</th><td class="ng-binding">15</td></tr>
-          <tr><th>Max Level:</th><td class="ng-binding">50</td></tr>
-          <tr><th>HP:</th><td class="ng-binding">4785</td></tr>
-          <tr><th>ATK:</th><td class="ng-binding">1780</td></tr>
+          <tbody><tr><th>Card Name:</th><td>Huscarl</td></tr>
+          <tr><th>Class:</th><td>Camelot</td></tr>
+          <tr><th>Stars:</th><td>4</td></tr>
+          <tr><th>Mana:</th><td>15</td></tr>
+          <tr><th>Max Level:</th><td>50</td></tr>
+          <tr><th>HP:</th><td>4785</td></tr>
+          <tr><th>ATK:</th><td>1780</td></tr>
           <tr>
             <th>Combos:</th>
-            <td><!-- ngRepeat: combo in card.combos --><div class="combo ng-scope" ng-repeat="combo in card.combos" ng-mouseenter="mouseenterCombo(card, combo)" ng-mouseleave="mouseleaveCombo(card, combo)"><a ng-href="/combo/Mercenaries" class="ng-binding" href="/combo/Mercenaries">Mercenaries</a><!-- ngIf: isComboHovered(card, combo) --></div><!-- end ngRepeat: combo in card.combos --><div class="combo ng-scope" ng-repeat="combo in card.combos" ng-mouseenter="mouseenterCombo(card, combo)" ng-mouseleave="mouseleaveCombo(card, combo)"><a ng-href="/combo/Hired Steel" class="ng-binding" href="/combo/Hired Steel">Hired Steel</a><!-- ngIf: isComboHovered(card, combo) --></div><!-- end ngRepeat: combo in card.combos --></td>
+            <td><div class="combo"><a href="/combo/Mercenaries">Mercenaries</a></div><div class="combo"><a href="/combo/Hired Steel">Hired Steel</a></div></td>
           </tr>
         </tbody></table>
         <br>
         <br>
-        More details about this card on <a ng-href="http://heroes-of-camelot.wikia.com/wiki/Huscarl" href="http://heroes-of-camelot.wikia.com/wiki/Huscarl">wikia.com</a>.
+        More details about this card on <a href="http://heroes-of-camelot.wikia.com/wiki/Huscarl">wikia.com</a>.
       </div>
-    </div><!-- end ngIf: card -->
+    </div>
   </div>
   </div>
   <div class="footer">Heroes of Camelot is a trademark of <a href="http://www.kabam.com">Kabam Inc.</a></div>
-  
-  
-  
-  
-  
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -91,6 +77,4 @@
     ga('create', 'UA-48535839-6', 'heroes-of-camelot.info');
     ga('send', 'pageview');
   </script>
-
-
 </body></html>

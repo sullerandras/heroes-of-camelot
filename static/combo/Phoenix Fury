@@ -1,5 +1,5 @@
-<!DOCTYPE html><html ng-controller="AppController" class="ng-scope"><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\:form{display:block;}</style>
-  <title ng-bind-template="Phoenix Fury - Combo - Heroes of Camelot" class="ng-binding">Phoenix Fury - Combo - Heroes of Camelot</title>
+<!DOCTYPE html><html><head>
+  <title-template="Phoenix Fury - Combo - Heroes of Camelot">Phoenix Fury - Combo - Heroes of Camelot</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -37,41 +37,27 @@
   .icon3 { background-position: -205px -143px; }
   .icon4 { background-position: -276px -143px; }
   </style>
-  
-  
-  
   <link rel="stylesheet" type="text/css" href="/lib/bootstrap.css">
-  
-  
-  
-  
-  
 </head>
-
-<body style="">
+<body>
   <div id="wrap">
-    <!-- ngView:  --><div ng-view="" class="ng-scope">
-    <a href="/" class="btn btn-primary ng-scope">&lt; Back to list</a>
-    <!-- ngIf: combo --><div ng-if="combo" class="ng-scope">
+    <div>
+    <a href="/" class="btn btn-primary">&lt; Back to list</a>
+    <div>
       <div class="pull-right">
-        <img ng-src="/combos/Phoenix Fury.jpg" alt="Phoenix Fury" src="/combos/Phoenix Fury.jpg">
+        <img alt="Phoenix Fury" src="/combos/Phoenix Fury.jpg">
       </div>
       <div class="details">
         <table class="table">
-          <tbody><tr><th>Combo Name:</th><td class="ng-binding">Phoenix Fury</td></tr>
-          <tr><th>Description:</th><td class="ng-binding">Revive team with 50% HP upon death</td></tr>
-          <tr><th>Cards:</th><td><!-- ngRepeat: card in combo.cards --><div class="card ng-scope" ng-repeat="card in combo.cards" ng-mouseenter="mouseenterCard(combo, card)" ng-mouseleave="mouseleaveCard(combo, card)"><a ng-href="/card/Ben-nu Frostborn" class="ng-binding" href="/card/Ben-nu Frostborn">Ben-nu Frostborn</a><!-- ngIf: isCardHovered(combo, card) --></div><!-- end ngRepeat: card in combo.cards --><div class="card ng-scope" ng-repeat="card in combo.cards" ng-mouseenter="mouseenterCard(combo, card)" ng-mouseleave="mouseleaveCard(combo, card)"><a ng-href="/card/Ben-nu Skyborn" class="ng-binding" href="/card/Ben-nu Skyborn">Ben-nu Skyborn</a><!-- ngIf: isCardHovered(combo, card) --></div><!-- end ngRepeat: card in combo.cards --><div class="card ng-scope" ng-repeat="card in combo.cards" ng-mouseenter="mouseenterCard(combo, card)" ng-mouseleave="mouseleaveCard(combo, card)"><a ng-href="/card/Ben-nu Hellborn" class="ng-binding" href="/card/Ben-nu Hellborn">Ben-nu Hellborn</a><!-- ngIf: isCardHovered(combo, card) --></div><!-- end ngRepeat: card in combo.cards --><div class="card ng-scope" ng-repeat="card in combo.cards" ng-mouseenter="mouseenterCard(combo, card)" ng-mouseleave="mouseleaveCard(combo, card)"><a ng-href="/card/Ben-nu Fireborn" class="ng-binding" href="/card/Ben-nu Fireborn">Ben-nu Fireborn</a><!-- ngIf: isCardHovered(combo, card) --></div><!-- end ngRepeat: card in combo.cards --></td></tr>
+          <tbody><tr><th>Combo Name:</th><td>Phoenix Fury</td></tr>
+          <tr><th>Description:</th><td>Revive team with 50% HP upon death</td></tr>
+          <tr><th>Cards:</th><td><div class="card"><a href="/card/Ben-nu Frostborn">Ben-nu Frostborn</a></div><div class="card"><a href="/card/Ben-nu Skyborn">Ben-nu Skyborn</a></div><div class="card"><a href="/card/Ben-nu Hellborn">Ben-nu Hellborn</a></div><div class="card"><a href="/card/Ben-nu Fireborn">Ben-nu Fireborn</a></div></td></tr>
         </tbody></table>
       </div>
-    </div><!-- end ngIf: combo -->
+    </div>
   </div>
   </div>
   <div class="footer">Heroes of Camelot is a trademark of <a href="http://www.kabam.com">Kabam Inc.</a></div>
-  
-  
-  
-  
-  
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -80,6 +66,4 @@
     ga('create', 'UA-48535839-6', 'heroes-of-camelot.info');
     ga('send', 'pageview');
   </script>
-
-
 </body></html>
