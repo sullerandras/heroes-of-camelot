@@ -80,7 +80,8 @@
   }
   function is_bot(){
     try {
-      return window.navigator.userAgent.indexOf('Googlebot') >= 0
+      return window.navigator.userAgent.indexOf('Googlebot') >= 0 ||
+             window.navigator.userAgent == 'XXX'
     } catch (e) {
       return true
     }
@@ -453,7 +454,7 @@
     </div>
   </script>
   <script type="text/ng-template" id="my_combos.html">
-    <p>Here you can see what combos you can make with your cards. You can select/unselect your cards on the Cards tab.</p>
+    <p>Here you can see what combos you can make with your cards. You can select/unselect your cards on the Cards tab. Selected cards are stored in your browser's session, so next time when you come back, you won't need to add all your cards again, just add the new cards you got. I recommend to only add cards with 3 or more stars.</p>
     <div class="my_combo">
       <table class="combos table table-hover table-striped">
         <thead>
