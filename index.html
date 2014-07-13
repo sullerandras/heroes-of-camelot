@@ -465,7 +465,7 @@
             <th>Image</th>
           </tr>
         </thead>
-        <tr ng-repeat="combo in my_combos()">
+        <tr ng-repeat="combo in my_combos() | filter:search">
           <td><a href="/combo/{{combo.name}}">{{combo.name}}</a></td>
           <td>{{combo.description}}</td>
           <td>
