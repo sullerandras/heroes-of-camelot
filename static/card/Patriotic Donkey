@@ -1,10 +1,10 @@
 <!DOCTYPE html><html><head>
-  <title-template=""></title>
+  <title>Patriotic Donkey - Card - Heroes of Camelot</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="description" content="Heroes of Camelot list of cards">
+  <meta name="description" content="Details of &quot;Patriotic Donkey&quot; Card - Heroes of Camelot">
   <style>
   /* Sticky Footer Solution */
   * {margin:0;padding:0;}
@@ -43,6 +43,29 @@
   <div id="wrap">
     <div>
     <a href="/" class="btn btn-primary">&lt; Back to list</a>
+    <div>
+      <div class="pull-right">
+        <img alt="Patriotic Donkey" src="/cards/Patriotic Donkey.jpg">
+      </div>
+      <div class="details">
+        <table class="table">
+          <tbody><tr><th>Card Name:</th><td>Patriotic Donkey</td></tr>
+          <tr><th>Class:</th><td>Camelot</td></tr>
+          <tr><th>Stars:</th><td>1</td></tr>
+          <tr><th>Mana:</th><td>20</td></tr>
+          <tr><th>Max Level:</th><td>1</td></tr>
+          <tr><th>HP:</th><td>1</td></tr>
+          <tr><th>ATK:</th><td>1</td></tr>
+          <tr>
+            <th>Combos:</th>
+            <td></td>
+          </tr>
+        </tbody></table>
+        <br>
+        <br>
+        More details about this card on <a href="http://heroes-of-camelot.wikia.com/wiki/Patriotic_Donkey">wikia.com</a>.
+      </div>
+    </div>
   </div>
   </div>
   <div class="footer">Heroes of Camelot is a trademark of <a href="http://www.kabam.com">Kabam Inc.</a></div>

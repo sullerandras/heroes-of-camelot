@@ -1,10 +1,10 @@
 <!DOCTYPE html><html><head>
-  <title-template="Lady of the Lake - Card - Heroes of Camelot">Lady of the Lake - Card - Heroes of Camelot</title>
+  <title>Lady of the Lake - Card - Heroes of Camelot</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="description" content="Heroes of Camelot list of cards">
+  <meta name="description" content="Details of &quot;Lady of the Lake&quot; Card - Heroes of Camelot">
   <style>
   /* Sticky Footer Solution */
   * {margin:0;padding:0;}
@@ -52,7 +52,7 @@
           <tbody><tr><th>Card Name:</th><td>Lady of the Lake</td></tr>
           <tr><th>Class:</th><td>Camelot</td></tr>
           <tr><th>Stars:</th><td>5</td></tr>
-          <tr><th>Mana:</th><td></td></tr>
+          <tr><th>Mana:</th><td>14</td></tr>
           <tr><th>Max Level:</th><td>50</td></tr>
           <tr><th>HP:</th><td>7036</td></tr>
           <tr><th>ATK:</th><td>1694</td></tr>

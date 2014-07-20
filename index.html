@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="description" content="Heroes of Camelot list of cards">
+  <meta name="description" ng-attr-content="{{description}}">
   <style>
   /* Sticky Footer Solution */
   * {margin:0;padding:0;}
@@ -231,10 +231,13 @@
     $scope.$watch('currentTab', function(){
       if ($scope.currentTab == 'combos') {
         $rootScope.title = 'Combo List - Heroes of Camelot'
+        $rootScope.description = 'Combo List - Heroes of Camelot'
       } else if ($scope.currentTab == 'my_combos') {
         $rootScope.title = 'My Combo List - Heroes of Camelot'
+        $rootScope.description = 'My Combo List - Heroes of Camelot'
       } else {
         $rootScope.title = 'Card List - Heroes of Camelot'
+        $rootScope.description = 'Card List - Heroes of Camelot'
       }
     })
     $rootScope.hovers = {}
@@ -292,6 +295,7 @@
         if (card.name == $routeParams.cardId){
           $scope.card = card
           $rootScope.title = card.name + ' - Card - Heroes of Camelot'
+          $rootScope.description = 'Details of "' + card.name + '" Card - Heroes of Camelot'
           logEvent('card', 'view', card.name)
           break
         }
@@ -305,6 +309,7 @@
         var combo = data.combos[index]
         if (combo.name == $routeParams.comboId){
           $rootScope.title = combo.name + ' - Combo - Heroes of Camelot'
+          $rootScope.description = 'Details of "' + combo.name + '" Combo - Heroes of Camelot'
           $scope.combo = combo
           logEvent('combo', 'view', combo.name)
           break

@@ -1,10 +1,10 @@
 <!DOCTYPE html><html><head>
-  <title-template="White Knight - Card - Heroes of Camelot">White Knight - Card - Heroes of Camelot</title>
+  <title>White Knight - Card - Heroes of Camelot</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="description" content="Heroes of Camelot list of cards">
+  <meta name="description" content="Details of &quot;White Knight&quot; Card - Heroes of Camelot">
   <style>
   /* Sticky Footer Solution */
   * {margin:0;padding:0;}
@@ -52,7 +52,7 @@
           <tbody><tr><th>Card Name:</th><td>White Knight</td></tr>
           <tr><th>Class:</th><td>Camelot</td></tr>
           <tr><th>Stars:</th><td>6</td></tr>
-          <tr><th>Mana:</th><td></td></tr>
+          <tr><th>Mana:</th><td>22</td></tr>
           <tr><th>Max Level:</th><td>50</td></tr>
           <tr><th>HP:</th><td>13013</td></tr>
           <tr><th>ATK:</th><td>3058</td></tr>
