@@ -1,5 +1,5 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<url><loc>http://www.heroes-of-camelot.info</loc><lastmod>2014-07-20</lastmod><changefreq>hourly</changefreq></url>
+<url><loc>http://www.heroes-of-camelot.info</loc><lastmod>2014-07-21</lastmod><changefreq>hourly</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Abnoba</loc><lastmod>2014-04-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Ageless%20Scorpion</loc><lastmod>2014-07-04</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Aleria</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
@@ -32,7 +32,7 @@
 <url><loc>http://www.heroes-of-camelot.info/card/Berserker</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Black%20Knight</loc><lastmod>2014-04-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Blacksmith</loc><lastmod>2014-01-29</lastmod><changefreq>daily</changefreq></url>
-<url><loc>http://www.heroes-of-camelot.info/card/Blademaster</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
+<url><loc>http://www.heroes-of-camelot.info/card/Blademaster</loc><lastmod>2014-07-21</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Blood%20Briar</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Bourgard</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Butcher%20of%20Princes</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
@@ -170,17 +170,17 @@
 <url><loc>http://www.heroes-of-camelot.info/card/Unicorn</loc><lastmod>2014-01-29</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Vambrael</loc><lastmod>2014-07-04</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Vanguard</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
-<url><loc>http://www.heroes-of-camelot.info/card/Veteran%20Paladin</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
+<url><loc>http://www.heroes-of-camelot.info/card/Veteran%20Paladin</loc><lastmod>2014-07-21</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Violet%20Knight</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Vortigern</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/War%20Cleric</loc><lastmod>2014-06-30</lastmod><changefreq>daily</changefreq></url>
-<url><loc>http://www.heroes-of-camelot.info/card/War%20Drummer</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
+<url><loc>http://www.heroes-of-camelot.info/card/War%20Drummer</loc><lastmod>2014-07-21</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/War%20Hound</loc><lastmod>2014-02-02</lastmod><changefreq>daily</changefreq></url>
-<url><loc>http://www.heroes-of-camelot.info/card/War</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
+<url><loc>http://www.heroes-of-camelot.info/card/War</loc><lastmod>2014-07-21</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Warrior%20Monk</loc><lastmod>2014-02-02</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Water%20Elemental</loc><lastmod>2014-06-21</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Water%20Nymph</loc><lastmod>2014-06-16</lastmod><changefreq>daily</changefreq></url>
-<url><loc>http://www.heroes-of-camelot.info/card/Weapon%20Master</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
+<url><loc>http://www.heroes-of-camelot.info/card/Weapon%20Master</loc><lastmod>2014-07-21</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/White%20Knight</loc><lastmod>2014-07-16</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Wild%20Hunt</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/card/Winter%20Treekin</loc><lastmod>2014-06-28</lastmod><changefreq>daily</changefreq></url>
@@ -194,6 +194,7 @@
 <url><loc>http://www.heroes-of-camelot.info/combo/Assault%20Team</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/combo/Augmented%20Arms</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/combo/Back%20to%20Back</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
+<url><loc>http://www.heroes-of-camelot.info/combo/Battleborn</loc><lastmod>2014-07-21</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/combo/Behemoths</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/combo/Beyond%20Redemption</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/combo/Blessed%20Knight%20Rider</loc><lastmod>2014-02-02</lastmod><changefreq>daily</changefreq></url>
@@ -285,6 +286,7 @@
 <url><loc>http://www.heroes-of-camelot.info/combo/Noobs</loc><lastmod>2014-02-02</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/combo/On%20the%20Hunt</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/combo/Opposite%20Ends</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
+<url><loc>http://www.heroes-of-camelot.info/combo/Paragons%20of%20War</loc><lastmod>2014-07-21</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/combo/Patriots</loc><lastmod>2014-07-05</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/combo/Pet%20Familiars</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
 <url><loc>http://www.heroes-of-camelot.info/combo/Phoenix%20Fury</loc><lastmod>2014-06-15</lastmod><changefreq>daily</changefreq></url>
